@@ -16,7 +16,7 @@
 /* Atajo para describir una foto: ruta (sin .webp), ancho, alto y datos */
 const foto = (src, w, h, datos = {}) => ({ src, w, h, ...datos });
 
-const EQUIPO_FOTO = "Y. Martínez y K. Romero";
+const EQUIPO_FOTO = "Y. Martínez";
 
 window.SITE = {
   meta: {
@@ -362,7 +362,7 @@ window.SITE = {
       { rol: "Investigación, documentación y trabajo de campo", nombres: "Kasay Romero, Gianna Sánchez y Yuliana Martínez" },
       { rol: "Dirección de arte y diseño editorial", nombres: "Kasay Romero" },
       { rol: "Diseño gráfico e ilustración", nombres: "Kasay Romero, Gianna Sánchez y Yuliana Martínez" },
-      { rol: "Fotografía y registro audiovisual", nombres: "Kasay Romero y Yuliana Martínez" },
+      { rol: "Fotografía y registro audiovisual", nombres: "Yuliana Martínez" },
       { rol: "Edición y redacción", nombres: "Gianna Sánchez y Yuliana Martínez" },
       { rol: "Corrección de textos", nombres: "Yuliana Martínez" },
       { rol: "Con la participación de", nombres: "el letrerista Yeison Romero y la magíster en Educación, Arte y Cultura Teolinda Berrio" },
