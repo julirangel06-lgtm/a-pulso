@@ -326,7 +326,7 @@
         <div class="masonry masonry--barrio">${b.fotos.map((f, i) => `
           <figure class="masonry__item marco-amarillo">
             ${tarjetaFoto(f, "barrio", i, "(min-width: 1100px) 22vw, (min-width: 640px) 45vw, 92vw")}
-            <figcaption><span>${t(f.titulo)}</span><small>${t(f.fecha)} · ${t(f.autor)}</small></figcaption>
+            <figcaption><span>${t(f.titulo)}</span><small>${[f.fecha, f.autor].filter(Boolean).map(t).join(" · ")}</small></figcaption>
           </figure>`).join("")}
         </div>`;
     };
