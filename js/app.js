@@ -28,9 +28,9 @@
     if (extra) partes.push(extra);
     const meta = [];
     if (f.direccion !== undefined) meta.push(`Dirección aproximada: ${t(f.direccion)}`);
-    meta.push(`Fecha: ${t(f.fecha || "[PENDIENTE]")}`);
-    meta.push(`Foto: ${t(f.autor || "[PENDIENTE]")}`);
-    partes.push(`<span class="pie-meta">${meta.join(" · ")}</span>`);
+    if (f.fecha) meta.push(`Fecha: ${t(f.fecha)}`);
+    if (f.autor) meta.push(`Foto: ${t(f.autor)}`);
+    if (meta.length) partes.push(`<span class="pie-meta">${meta.join(" · ")}</span>`);
     return partes.join("<br>");
   }
 
