@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A PULSO · El oficio letrerista del Centro Histórico de Barranquilla</title>
+  <meta name="description" content="Proyecto editorial sobre el oficio letrerista y el patrimonio gráfico del Centro Histórico de Barranquilla: galería, entrevistas, recorrido por barrios y talleres.">
+  <meta name="theme-color" content="#0B5356">
+  <meta property="og:title" content="A PULSO">
+  <meta property="og:description" content="El oficio letrerista y el patrimonio gráfico del Centro Histórico de Barranquilla.">
+  <meta property="og:image" content="img/portada-cartilla.webp">
+  <link rel="icon" href="img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Kaushan+Script&family=Lilita+One&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="img/logo-apulso.webp">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera" id="cabecera">
+    <a class="cabecera__marca" href="#inicio" aria-label="A PULSO, ir al inicio">
+      <img src="img/logo-apulso-sm.webp" alt="" width="60" height="62">
+    </a>
+    <button class="cabecera__menu" id="btnMenu" aria-expanded="false" aria-controls="menu">
+      <span class="hamb" aria-hidden="true"></span><span>Menú</span>
+    </button>
+    <nav id="menu" class="menu" aria-label="Secciones"></nav>
+  </header>
+
+  <main id="contenido">
+    <section id="inicio" class="sec hero" aria-labelledby="hero-titulo"></section>
+    <section id="proyecto" class="sec proyecto" aria-labelledby="proyecto-titulo"></section>
+    <section id="historia" class="sec historia" aria-labelledby="historia-titulo"></section>
+    <section id="letrerista" class="sec letrerista" aria-labelledby="letrerista-titulo"></section>
+    <section id="entrevistas" class="sec entrevistas" aria-labelledby="entrevistas-titulo"></section>
+    <section id="barrios" class="sec barrios" aria-labelledby="barrios-titulo"></section>
+    <section id="taller" class="sec taller" aria-labelledby="taller-titulo"></section>
+    <section id="oficio" class="sec oficio" aria-labelledby="oficio-titulo"></section>
+  </main>
+
+  <footer class="pie" id="pie"></footer>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Foto ampliada">
+    <div class="lightbox__marco">
+      <figure class="lightbox__fig">
+        <img id="lbImg" alt="">
+        <figcaption id="lbPie"></figcaption>
+      </figure>
+      <button class="lb-btn lb-cerrar" id="lbCerrar" aria-label="Cerrar">✕</button>
+      <button class="lb-btn lb-prev" id="lbPrev" aria-label="Foto anterior">‹</button>
+      <button class="lb-btn lb-next" id="lbNext" aria-label="Foto siguiente">›</button>
+      <p class="lb-cuenta" id="lbCuenta" aria-live="polite"></p>
+    </div>
+  </dialog>
+
+  <noscript><p class="noscript">Este sitio necesita JavaScript para mostrar la galería y los contenidos.</p></noscript>
+  <script src="js/data.js"></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
