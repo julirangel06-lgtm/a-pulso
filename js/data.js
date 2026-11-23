@@ -67,6 +67,10 @@ window.SITE = {
       portada: foto("img/portada-cartilla", 900, 1350, { alt: "Portada de la cartilla A PULSO: el título en letra rotulada sobre una pared blanca con una hoja de palma" }),
       pdf: "descargas/a-pulso-cartilla.pdf",
       detalle: "PDF · 83 páginas · 14,9 MB",
+      /* La descarga se habilita sola en esta fecha (hora de Colombia, UTC-5).
+         Deja "" para que esté disponible desde ya. */
+      disponibleDesde: "2026-12-04T00:00:00-05:00",
+      textoEspera: "La cartilla se podrá descargar el 4 de diciembre de 2026",
     },
     creditos: {
       institucion: "Institución Universitaria de Barranquilla",

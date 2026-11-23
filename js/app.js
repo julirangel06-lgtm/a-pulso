@@ -107,7 +107,7 @@
         </div>
         <aside class="cartilla" aria-label="La cartilla">
           <div class="estampilla-sombra revela"><div class="estampilla">${img(p.cartilla.portada, { sizes: "(min-width: 900px) 360px, 80vw" })}</div></div>
-          <a class="boton boton--amarillo boton--grande" href="${p.cartilla.pdf}" download>Descargar la cartilla</a>
+          <div id="descargaCartilla" class="cartilla__descarga"></div>
           <p class="cartilla__detalle">${esc(p.cartilla.detalle)}</p>
           <div class="creditos sticker">
             <strong>${esc(p.creditos.institucion)}</strong><br>${esc(p.creditos.programa)}<br>${esc(p.creditos.lugar)}
@@ -116,6 +116,36 @@
       </div>
       ${deco("silla", "p-silla", 361, 520)}
       <div class="borde borde--abajo" style="--borde:var(--c-hueso)"></div>`;
+    initCuentaRegresiva(p.cartilla);
+  }
+
+  /* Cuenta regresiva: el botón de la cartilla se activa en cartilla.disponibleDesde */
+  function initCuentaRegresiva(c) {
+    const caja = $("#descargaCartilla");
+    const meta = c.disponibleDesde ? new Date(c.disponibleDesde).getTime() : 0;
+    const boton = `<a class="boton boton--amarillo boton--grande" href="${c.pdf}" download>Descargar la cartilla</a>`;
+    if (!meta || Date.now() >= meta) { caja.innerHTML = boton; return; }
+    const piezas = [["dias", "días"], ["horas", "horas"], ["min", "min"], ["seg", "seg"]];
+    caja.innerHTML = `
+      <div class="cuenta" role="timer" aria-labelledby="cuentaTxt">
+        <p class="cuenta__titulo" id="cuentaTxt">${t(c.textoEspera)}</p>
+        <div class="cuenta__fichas" aria-hidden="true">
+          ${piezas.map(([k, l]) => `<span class="cuenta__ficha"><b data-k="${k}">00</b><small>${l}</small></span>`).join("")}
+        </div>
+        <p class="sr" aria-live="polite" id="cuentaSr"></p>
+        <span class="boton boton--grande boton--bloqueado" aria-disabled="true">🔒 Descargar la cartilla</span>
+      </div>`;
+    const dos = (n) => String(n).padStart(2, "0");
+    let ultimoDia = null;
+    const tick = () => {
+      const r = meta - Date.now();
+      if (r <= 0) { clearInterval(id); caja.innerHTML = boton; return; }
+      const v = { dias: Math.floor(r / 864e5), horas: Math.floor(r / 36e5) % 24, min: Math.floor(r / 6e4) % 60, seg: Math.floor(r / 1e3) % 60 };
+      $$("[data-k]", caja).forEach((el) => { el.textContent = dos(v[el.dataset.k]); });
+      if (v.dias !== ultimoDia) { ultimoDia = v.dias; $("#cuentaSr").textContent = `Faltan ${v.dias} días y ${v.horas} horas.`; }
+    };
+    tick();
+    const id = setInterval(tick, 1000);
   }
 
   /* ---------- 3. Línea de tiempo ---------- */
