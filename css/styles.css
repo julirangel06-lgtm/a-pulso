@@ -219,7 +219,7 @@ mark.pendiente {
 @media (min-width: 760px) {
   .h-negra { width: 210px; left: 3%; bottom: 10%; }
   .h-rafa { width: 170px; }
-  .h-fio { display: block; width: 180px; left: 6%; top: 46%; rotate: 6deg; }
+  .h-fio { display: block; width: 190px; left: 5%; top: 44%; rotate: 6deg; filter: drop-shadow(5px 5px 0 rgba(11, 83, 86, .45)); }
   .h-asado { display: block; width: 170px; right: 4%; top: 40%; rotate: -6deg; }
   .h-pinceles { display: block; width: 90px; right: 20%; bottom: 0; }
   .h-loro { display: block; width: 150px; left: 14%; top: 14%; }

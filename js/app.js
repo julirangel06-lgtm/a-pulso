@@ -71,7 +71,7 @@
         ${deco("nube-2", "h-nube2 flota-lento", 158, 160)}
         ${deco("negra-sabor", "h-negra inclina", 334, 354)}
         ${deco("donde-rafa", "h-rafa inclina", 355, 532)}
-        ${deco("hoy-no-fio", "h-fio inclina", 364, 401)}
+        ${deco("hoy-no-fio", "h-fio inclina", 700, 700)}
         ${deco("asado", "h-asado inclina", 376, 402)}
         ${deco("latas", "h-latas", 366, 320)}
         ${deco("pinceles-frasco", "h-pinceles", 170, 422)}
