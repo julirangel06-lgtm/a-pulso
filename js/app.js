@@ -67,12 +67,12 @@
     $("#inicio").innerHTML = `
       <div class="hero__collage" aria-hidden="true">
         <img class="deco h-palma" src="img/collage/palma.webp" width="726" height="624" alt="">
-        ${deco("nube-3", "h-nube1 flota", 380, 184)}
-        ${deco("nube-2", "h-nube2 flota-lento", 158, 160)}
+        ${deco("nube-esponjosa", "h-nube1 flota", 800, 329)}
+        ${deco("nube-esponjosa", "h-nube2 flota-lento", 800, 329)}
         ${deco("negra-sabor", "h-negra inclina", 334, 354)}
         ${deco("donde-rafa", "h-rafa inclina", 355, 532)}
         ${deco("hoy-no-fio-manana-si", "h-fio inclina", 700, 700)}
-        ${deco("asado", "h-asado inclina", 376, 402)}
+        ${deco("asado-cartel", "h-asado inclina", 810, 900)}
         ${deco("latas", "h-latas", 366, 320)}
         ${deco("pinceles-frasco", "h-pinceles", 170, 422)}
         ${deco("loro-2", "h-loro flota", 362, 384)}
@@ -92,7 +92,7 @@
     const p = S.proyecto;
     const coloresContenido = ["vivo", "turquesa", "hoja", "mango", "letrero"];
     $("#proyecto").innerHTML = `
-      ${deco("nube-3", "p-nube flota-lento", 380, 184)}
+      ${deco("nube-esponjosa", "p-nube flota-lento", 800, 329)}
       <div class="contenedor proyecto__grid">
         <div class="proyecto__texto">
           <h2 id="proyecto-titulo" class="rotulo rotulo--claro revela"><span class="rotulo__chico">${esc(p.antetitulo)}</span> ${esc(p.titulo)}</h2>
@@ -216,7 +216,7 @@
         </div>
         <div class="letrerista__texto">
           <h2 id="letrerista-titulo" class="titulo-img revela">
-            <img src="img/titulos/yeison-titulo.webp" width="368" height="218" alt="">
+            <img src="img/titulos/yeison-titulo-v2.webp" width="1000" height="631" alt="">
             <span class="sr">${esc(L.nombre)}, ${esc(L.rol)}</span>
           </h2>
           ${L.bio.map((x) => `<p>${t(x)}</p>`).join("")}
@@ -275,7 +275,7 @@
   function renderEntrevistas() {
     const E = S.entrevistas;
     $("#entrevistas").innerHTML = `
-      ${deco("nube-3", "e-nube flota", 380, 184)}
+      ${deco("nube-esponjosa", "e-nube flota", 800, 329)}
       <div class="contenedor">
         <h2 id="entrevistas-titulo" class="rotulo rotulo--amarillo revela">${esc(E.titulo)}</h2>
         <p class="intro intro--claro">${t(E.intro)}</p>
@@ -455,8 +455,8 @@
   function renderOficio() {
     const O = S.oficio;
     $("#oficio").innerHTML = `
-      ${deco("pinceles-1", "o-pinceles", 640, 418)}
-      ${deco("mano-pincel", "o-mano", 220, 163)}
+      ${deco("pinceles-manojo", "o-pinceles", 900, 606)}
+      ${deco("mano-lapiz", "o-mano", 900, 319)}
       <div class="contenedor">
         <h2 id="oficio-titulo" class="titulo-img titulo-img--centro revela">
           <img src="img/titulos/ocho-pasos.webp" width="377" height="173" alt="">

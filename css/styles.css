@@ -90,7 +90,7 @@ mark.pendiente {
 }
 .subrotulo--oscuro { color: var(--c-petroleo); }
 .titulo-img { margin: 0 0 1.2rem; }
-.titulo-img img { width: min(380px, 85%); filter: drop-shadow(4px 4px 0 rgba(11, 83, 86, .35)); }
+.titulo-img img { width: min(440px, 90%); filter: drop-shadow(4px 4px 0 rgba(11, 83, 86, .35)); }
 .titulo-img--centro img { margin-inline: auto; }
 .intro { font-size: clamp(1.05rem, 2vw, 1.2rem); max-width: 60ch; }
 .intro--claro { color: #fff; }
@@ -205,7 +205,7 @@ mark.pendiente {
 .hero__collage { position: absolute; inset: 0; z-index: 1; }
 .h-palma { width: min(560px, 70vw); right: -6%; top: -4%; opacity: .95; }
 .h-nube1 { width: 200px; left: 4%; top: 12%; }
-.h-nube2 { width: 110px; right: 18%; bottom: 20%; }
+.h-nube2 { width: 150px; right: 18%; bottom: 20%; }
 .h-negra { width: 150px; left: 2%; bottom: 8%; rotate: -8deg; }
 .h-rafa { width: 120px; right: 3%; bottom: 7%; rotate: 7deg; }
 .h-fio { display: block; width: 104px; right: 4%; top: 118px; rotate: 6deg; z-index: 2 !important; filter: drop-shadow(3px 3px 0 rgba(11, 83, 86, .45)); }
@@ -220,7 +220,7 @@ mark.pendiente {
   .h-negra { width: 210px; left: 3%; bottom: 10%; }
   .h-rafa { width: 170px; }
   .h-fio { display: block; width: 190px; left: 5%; right: auto; top: 44%; rotate: 6deg; filter: drop-shadow(5px 5px 0 rgba(11, 83, 86, .45)); }
-  .h-asado { display: block; width: 170px; right: 4%; top: 40%; rotate: -6deg; }
+  .h-asado { display: block; width: 200px; right: 3%; top: 36%; rotate: -4deg; filter: drop-shadow(4px 4px 0 rgba(11, 83, 86, .3)); }
   .h-pinceles { display: block; width: 90px; right: 20%; bottom: 0; }
   .h-loro { display: block; width: 150px; left: 14%; top: 14%; }
   .h-latas { width: 170px; left: 24%; }
@@ -523,8 +523,8 @@ mark.pendiente {
 
 /* ---------- 8. OFICIO ---------- */
 .oficio { background: var(--c-hueso) url("../img/textura-pared.webp") center / 600px auto; }
-.o-pinceles { width: 330px; right: -40px; top: 60px; rotate: -8deg; opacity: .95; display: none; }
-.o-mano { width: 170px; left: 0; top: 140px; display: none; }
+.o-pinceles { width: 340px; right: -50px; top: 50px; rotate: 8deg; display: none; }
+.o-mano { width: 280px; left: -40px; top: 120px; rotate: -6deg; display: none; }
 @media (min-width: 1100px) { .o-pinceles, .o-mano { display: block; } }
 .pasos { list-style: none; padding: 0; margin: 2.5rem 0; display: grid; gap: 1.4rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
 .paso {
