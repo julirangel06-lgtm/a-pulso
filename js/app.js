@@ -148,46 +148,58 @@
     const id = setInterval(tick, 1000);
   }
 
-  /* ---------- 3. Línea de tiempo ---------- */
+  /* ---------- 3. Línea de tiempo: slide horizontal al bajar ---------- */
   function renderHistoria() {
-    const h = S.historia;
+    const h = S.historia, n = h.hitos.length;
     $("#historia").innerHTML = `
-      <div class="contenedor">
-        <h2 id="historia-titulo" class="rotulo rotulo--degradado revela">${ast()} ${esc(h.titulo)} ${ast()}</h2>
-        <p class="intro">${t(h.intro)}</p>
-      </div>
-      <div class="linea">
-        <div class="linea__controles">
-          <button class="boton-redondo" data-dir="-1" aria-label="Hito anterior">‹</button>
-          <button class="boton-redondo" data-dir="1" aria-label="Hito siguiente">›</button>
+      <div class="hist" id="hist">
+        <div class="hist__fijo">
+          <div class="contenedor hist__cab">
+            <h2 id="historia-titulo" class="rotulo rotulo--degradado revela">${ast()} ${esc(h.titulo)} ${ast()}</h2>
+            <p class="intro">${t(h.intro)}</p>
+          </div>
+          <ol class="hist__pista" id="histPista" aria-label="Línea de tiempo">
+            ${h.hitos.map((x, i) => `
+            <li class="hito" style="--fondo:${col(x.color)}">
+              <span class="hito__num" aria-hidden="true">${i + 1}/${n}</span>
+              <div class="hito__img">${img(x.img, { sizes: "260px" })}</div>
+              <div class="hito__cuerpo">
+                <p class="hito__fecha">${esc(x.fecha)} <span class="hito__lugar">${esc(x.lugar)}</span></p>
+                <h3>${t(x.titulo)}</h3>
+                <p>${t(x.texto)}</p>
+                <p class="hito__fuente">${t(x.fuente)}</p>
+              </div>
+            </li>`).join("")}
+          </ol>
+          <div class="hist__barra" aria-hidden="true"><span id="histProg"></span>
+            ${h.hitos.map((x, i) => `<i style="left:${(i / (n - 1)) * 100}%"><b>${esc(x.fecha)}</b></i>`).join("")}
+          </div>
         </div>
-        <ol class="linea__pista" tabindex="0" role="region" aria-label="Línea de tiempo, desliza horizontalmente">
-          ${h.hitos.map((x, i) => `
-          <li class="hito" style="--fondo:${col(x.color)}">
-            <span class="hito__cuerda" aria-hidden="true"></span>
-            <div class="hito__cab"><span class="hito__fecha">${esc(x.fecha)}</span><span class="hito__lugar">${esc(x.lugar)}</span></div>
-            <div class="hito__img">${img(x.img, { sizes: "280px" })}</div>
-            <div class="hito__cuerpo">
-              <h3>${t(x.titulo)}</h3>
-              <p>${t(x.texto)}</p>
-              <p class="hito__fuente">${t(x.fuente)}</p>
-            </div>
-            ${i < h.hitos.length - 1 ? '<span class="hito__flecha" aria-hidden="true">→</span>' : ""}
-          </li>`).join("")}
-        </ol>
       </div>
       <div class="borde borde--abajo" style="--borde:var(--c-mango)"></div>`;
 
-    const pista = $(".linea__pista");
-    $$(".linea__controles button").forEach((b) => b.addEventListener("click", () => {
-      const card = pista.querySelector(".hito");
-      pista.scrollBy({ left: Number(b.dataset.dir) * (card.offsetWidth + 24), behavior: reduceMotion ? "auto" : "smooth" });
-    }));
-    // arrastrar con el mouse
-    let x0 = 0, s0 = 0, arrastrando = false;
-    pista.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") return; arrastrando = true; x0 = e.clientX; s0 = pista.scrollLeft; pista.classList.add("arrastrando"); });
-    window.addEventListener("pointermove", (e) => { if (arrastrando) pista.scrollLeft = s0 - (e.clientX - x0); });
-    window.addEventListener("pointerup", () => { arrastrando = false; pista.classList.remove("arrastrando"); });
+    const cont = $("#hist"), pista = $("#histPista"), prog = $("#histProg");
+    // Sin animación: la pista se desliza con el dedo o con la barra de desplazamiento
+    if (reduceMotion) { cont.classList.add("hist--libre"); return; }
+    let dist = 0, pend = false;
+    const medir = () => {
+      pista.style.transform = "";
+      dist = Math.max(0, pista.scrollWidth - window.innerWidth);
+      cont.style.height = `${window.innerHeight + dist}px`;
+      mover();
+    };
+    const mover = () => {
+      pend = false;
+      const r = cont.getBoundingClientRect();
+      const total = cont.offsetHeight - window.innerHeight;
+      const p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
+      pista.style.transform = `translate3d(${-p * dist}px,0,0)`;
+      prog.style.width = `${p * 100}%`;
+    };
+    window.addEventListener("scroll", () => { if (!pend) { pend = true; requestAnimationFrame(mover); } }, { passive: true });
+    window.addEventListener("resize", medir);
+    window.addEventListener("load", medir);
+    medir();
   }
 
   /* ---------- 4. El letrerista ---------- */

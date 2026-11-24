@@ -40,7 +40,7 @@ window.SITE = {
     logo: foto("img/logo-apulso", 1073, 1100, { alt: "A PULSO, escrito en letra rotulada a pincel con degradado amarillo, rojo y verde" }),
     subtitulo:
       "Proyecto editorial sobre el oficio letrerista y el patrimonio gráfico del Centro Histórico de Barranquilla",
-    frase: "Cada ciudad tiene una manera de escribirse a sí misma. Y Barranquilla lo hace con letras propias.",
+    frase: "Barranquilla se escribe a mano. Ven a conocer a quienes la pintan.",
     botones: [
       { texto: "Ver la galería", destino: "#barrios", estilo: "amarillo" },
       { texto: "Conoce el proyecto", destino: "#proyecto", estilo: "rojo" },
@@ -52,16 +52,15 @@ window.SITE = {
     antetitulo: "¿Qué es",
     titulo: "A PULSO?",
     parrafos: [
-      "A PULSO es un proyecto editorial sobre el oficio letrerista y el patrimonio gráfico del Centro Histórico de Barranquilla, orientado a su documentación, difusión y transmisión práctica del saber.",
-      "Caminamos Barrio Abajo, El Centro y San Roque mirando para arriba: fachadas, vitrinas, muros y letreros hechos a pincel que le dicen a uno qué se vende, quién atiende y de qué barrio es. Ese paisaje lo pintan personas con nombre propio, y vale la pena conocerlas.",
-      "Por eso documentamos el oficio: para dar a conocer a quienes lo hacen, contar de dónde viene y compartir cómo se aprende. Lo hicimos de la mano del letrerista Yeison Romero, que nos abrió su taller.",
+      "Una cartilla y una galería sobre los letreros pintados a mano del Centro Histórico de Barranquilla.",
+      "Caminamos Barrio Abajo, El Centro y San Roque, entramos al taller de Yeison Romero y lo juntamos todo en una guía para que tú también aprendas a hacer letras a pulso.",
     ],
     contenido: [
-      { num: "1", titulo: "Historia del letrerismo", texto: "De los avisos electorales de Pompeya a las fachadas de Barranquilla." },
-      { num: "2", titulo: "Las manos que mantienen el oficio vivo", texto: "Conoce a uno de los letreristas barranquilleros que siguen activos." },
-      { num: "3", titulo: "Aprende sobre el oficio", texto: "Herramientas, partes del pincel, fundamentos de la letra y el proceso de rotulación." },
-      { num: "4", titulo: "Consejos del maestro", texto: "Lo que recomienda el letrerista a quienes quieren empezar." },
-      { num: "5", titulo: "Bibliografía y agradecimientos", texto: "Las fuentes consultadas y las personas que lo hicieron posible." },
+      { num: "1", titulo: "La historia", texto: "De Pompeya a Barranquilla." },
+      { num: "2", titulo: "El letrerista", texto: "Yeison Romero y su oficio." },
+      { num: "3", titulo: "El oficio", texto: "Herramientas, trazos y el proceso paso a paso." },
+      { num: "4", titulo: "Consejos del maestro", texto: "Lo que debes saber para empezar." },
+      { num: "5", titulo: "Plantillas", texto: "Para imprimir y practicar." },
     ],
     cartilla: {
       portada: foto("img/portada-cartilla", 900, 1350, { alt: "Portada de la cartilla A PULSO: el título en letra rotulada sobre una pared blanca con una hoja de palma" }),
@@ -83,54 +82,54 @@ window.SITE = {
      color: rojo | vivo | hoja | petroleo | turquesa | mango | letrero  */
   historia: {
     titulo: "Historia del letrerismo",
-    intro: "De los muros de Pompeya a las fachadas de Barranquilla: un recorrido corto por el origen del oficio. Desliza para seguir el camino.",
+    intro: "2.000 años de letras pintadas en 7 paradas. Sigue bajando y recórrelas.",
     hitos: [
       {
         fecha: "Siglo I d. C.", lugar: "Pompeya", color: "hoja",
-        titulo: "Anuncios políticos en Pompeya",
-        texto: "Pompeya quedó sepultada por la erupción del Vesubio en el año 79, y gracias a eso sus muros se conservaron. En ellos hay unos 2.500 avisos electorales pintados a pincel por personas que se dedicaban a ese trabajo: uno de los primeros registros del oficio.",
+        titulo: "Campañas a pincel",
+        texto: "Sus muros conservan unos 2.500 avisos electorales pintados a pincel.",
         img: foto("img/hitos/pompeya-fragmento", 222, 215, { alt: "Fragmento de muro romano con una inscripción pintada en letras rojas" }),
         fuente: "Fuentes: Larwood y Hotten (1866/1908); Campbell (s. f.); Museo Archeologico Nazionale di Napoli (s. f.). Imagen: fragmento «L·ALBVCIVM·AED», S. Granata, MANN.",
       },
       {
         fecha: "1393", lugar: "Inglaterra", color: "vivo",
         titulo: "Sin letrero, sin cerveza",
-        texto: "El rey Ricardo II ordenó que quien fabricara cerveza para vender colgara un letrero en su puerta; si no, la perdía. Como muy pocos sabían leer, muchos letreros eran imágenes: un león, un ciervo blanco, unas llaves cruzadas.",
+        texto: "El rey Ricardo II obligó a las cervecerías a colgar un letrero en la puerta.",
         img: foto("img/hitos/jarra-1393", 200, 283, { alt: "Jarra de cerveza de cerámica decorada, con tapa de metal" }),
         fuente: "Fuente: Inn Sign Society (s. f.).",
       },
       {
         fecha: "1440", lugar: "Alemania", color: "turquesa",
         titulo: "Llega la imprenta",
-        texto: "Johannes Gutenberg desarrolla la imprenta de tipos móviles. Desde entonces la letra puede reproducirse idéntica. La letra pintada toma otro camino: cada una se hace a mano y es única.",
+        texto: "La letra impresa se repite idéntica; la pintada sigue siendo única.",
         img: foto("img/hitos/imprenta", 552, 458, { alt: "Prensa de imprenta antigua de hierro y madera" }),
         fuente: "Fuente: Encyclopaedia Britannica (s. f.).",
       },
       {
         fecha: "Siglo XVIII", lugar: "Europa y América", color: "mango",
-        titulo: "Pintar letreros se vuelve un oficio",
-        texto: "Con el crecimiento de las ciudades y del comercio, la fachada se vuelve el principal anuncio de un negocio y surge el pintor de letreros. Se aprendía en el taller: de aprendiz a oficial y de oficial a maestro, a fuerza de práctica.",
+        titulo: "Nace el oficio",
+        texto: "Las fachadas se vuelven anuncio y el pintor de letreros aprende en el taller.",
         img: foto("img/hitos/movers", 592, 424, { alt: "Letrero antiguo pintado a mano que dice West Haven Trucking Co., Movers, Storage" }),
         fuente: "Fuentes: Lennie (2015); Checa-Artasu y Castro Rodríguez (2015). Imagen: Cristian Roldan Art.",
       },
       {
         fecha: "1891 – 1903", lugar: "México y Estados Unidos", color: "letrero",
         titulo: "Un inspector y un manual",
-        texto: "En 1891 la Ciudad de México nombró un «policía de letreros» para corregir la ortografía de los rótulos. En 1903, W. A. Thompson publicó en Estados Unidos «Modern show card lettering», un manual para rotular con pincel y pluma.",
+        texto: "México vigila la ortografía de los rótulos y en EE. UU. sale un manual para rotular a pincel.",
         img: foto("img/hitos/mexico-manual", 647, 900, { alt: "Bandera de México sobre la Catedral Metropolitana y la portada de un manual antiguo de rotulación" }),
         fuente: "Fuentes: Sánchez Parra (2020); Thompson (1903).",
       },
       {
         fecha: "1960 – 1990", lugar: "Colombia", color: "rojo",
-        titulo: "El oficio en Colombia",
-        texto: "Llegó con manuales por correspondencia, y en 1960 la Academia Speedball enseñaba rotulación en Bogotá. Los pintores locales cambiaron el pincel fino por la brocha e hicieron sus propias herramientas. En los 90 el plóter y el vinilo reemplazaron muchos letreros: el oficio se redujo, pero no desapareció.",
+        titulo: "Llega a Colombia",
+        texto: "En 1960 ya se enseñaba en Bogotá; el vinilo de los 90 lo reduce, pero no lo borra.",
         img: foto("img/collage/ruteros", 417, 333, { alt: "Tablas de ruta de buses pintadas a mano con nombres de barrios de Bogotá" }),
         fuente: "Fuente: Martínez Vergara y Lozano Arango (2023). Imagen: A. Puentes, People’s Graphic Design Archive.",
       },
       {
         fecha: "Siglo XXI", lugar: "Barranquilla", color: "petroleo",
-        titulo: "Hoy, en los barrios populares",
-        texto: "La historia de los letreristas de Barranquilla apenas empieza a escribirse. Está en las fachadas, las vitrinas y los muros del Centro, y en quienes siguen pintando. Este proyecto es un primer paso para documentarla y darla a conocer.",
+        titulo: "Hoy, en Barranquilla",
+        texto: "Sigue vivo en las fachadas del Centro. Aquí empezamos a documentarlo.",
         img: foto("img/collage/super-combo", 415, 421, { alt: "Letrero pintado a mano: Super Combo, jugo más empanada" }),
         fuente: "Fuente: Martínez Vergara (2023). Imagen: Archivo Popular de Lujo.",
       },
@@ -143,18 +142,17 @@ window.SITE = {
     rol: "Artista plástico",
     foto: foto("img/collage/yeison", 635, 895, { alt: "Retrato en blanco y negro de Yeison Romero, de frente, con camiseta oscura" }),
     bio: [
-      "Yeison Romero tiene 28 años y más de quince dedicados al arte. Su vocación despertó en la infancia, entre dibujos, caricaturas y calcomanías, y creció de la mano de su familia y de maestros como Dairo Barrionuevo, José Llanos, Néstor Loaiza y Wilberto Echeverría. De ellos aprendió que el arte es un oficio vivo, que se hereda y se transmite en la práctica.",
-      "Hoy es un referente del arte picotero: su firma está en picós y turbos como El Timbalero, El Gran Fredy y El Sibanicú. Su pincel también ha llenado de color las calles de Barranquilla, con murales en barrios como Rebolo, Las Nieves, la Ciudadela 20 de Julio y Carrizal, en el Gran Malecón y en proyectos con la Alcaldía.",
-      "En su proceso se encuentran la tradición y la tecnología: cada obra nace como un boceto a lápiz, pasa por lo digital y llega a gran formato. Con la cuadrícula domina la perspectiva y con el círculo cromático consigue composiciones llenas de vida.",
+      "Tiene 28 años y más de quince con el pincel en la mano. Aprendió de su familia y de maestros del barrio, y hoy es un referente del arte picotero: su firma está en picós como El Timbalero, El Gran Fredy y El Sibanicú.",
+      "También ha llenado de color murales en Rebolo, Las Nieves, Carrizal y el Gran Malecón. Su secreto: boceto a lápiz, cuadrícula y mucha práctica.",
     ],
     cita: {
       texto: "Antes de coger un pincel, debes observar.",
       fuente: "Yeison Romero, entrevista del 3 de octubre de 2026",
     },
     consejos: [
-      { titulo: "Aprende a mirar", texto: "Antes de coger un pincel, debes observar. Mira muy bien cómo se agarra el lápiz y cómo se mueve la mano." },
-      { titulo: "Busca un maestro", texto: "Puedes ver tutoriales o leer libros, pero los secretos y las técnicas del oficio se aprenden mucho mejor al lado de un profesor real que te guíe paso a paso." },
-      { titulo: "¡No botes tus errores!", texto: "Al principio los dibujos salen feos y da rabia. No los rompas: guárdalos. Con el tiempo podrás compararlos con los nuevos y verás lo mucho que has mejorado." },
+      { titulo: "Aprende a mirar", texto: "Antes de coger el pincel, observa cómo se mueve la mano." },
+      { titulo: "Busca un maestro", texto: "Los secretos del oficio se aprenden al lado de alguien que ya lo sabe." },
+      { titulo: "¡No botes tus errores!", texto: "Guárdalos: mañana verás cuánto has mejorado." },
     ],
     /* tipo: debe coincidir con uno de "tipos" */
     tipos: ["Picós", "Telones y murales", "Letreros"],
@@ -185,7 +183,7 @@ window.SITE = {
      Mientras el id esté vacío se muestra el afiche de espera. */
   entrevistas: {
     titulo: "Entrevistas",
-    intro: "Conversaciones en el taller de Yeison Romero: cómo llegó al oficio, quiénes fueron sus maestros y cómo se hace una letra.",
+    intro: "Siéntate en el taller con Yeison: cómo empezó y cómo nace una letra.",
     episodios: [
       {
         ep: "Ep. 1",
@@ -231,12 +229,12 @@ window.SITE = {
      mapa: posición del punto en el mapa ilustrado (0 a 100). */
   barrios: {
     titulo: "Recorrido por barrios",
-    intro: "Fachadas, muros y letreros del Centro Histórico. Escoge un barrio, toca una foto para verla en grande y pasa con las flechas.",
+    intro: "Escoge un barrio y date una vuelta por sus letreros.",
     nota: "Mapa ilustrado, no está a escala.",
     lista: [
       {
         id: "barrio-abajo", nombre: "Barrio Abajo", color: "vivo",
-        descripcion: "Murales, casetas y letreros en esquinas pintadas de arriba abajo. Registro del 25 de octubre de 2026.",
+        descripcion: "Murales, casetas y esquinas pintadas de arriba abajo.",
         mapa: { x: 24, y: 34 },
         fotos: [
           foto("img/barrio-abajo/barrio-abajo-02", 1200, 1600, { titulo: "Restaurante La Negra del Sabor", alt: "Letrero de caballete con las palabras Restaurante La Negra del Sabor frente a una fachada amarilla", fecha: "25 de octubre de 2026", autor: EQUIPO_FOTO }),
@@ -250,7 +248,7 @@ window.SITE = {
       },
       {
         id: "el-centro", nombre: "El Centro", color: "petroleo",
-        descripcion: "Depósitos de madera, colchones y puertas: letreros con listas de productos y la dirección pintada en la fachada.",
+        descripcion: "Maderas, colchones y puertas, con la lista de productos pintada en la fachada.",
         mapa: { x: 60, y: 44 },
         fotos: [
           foto("img/el-centro/el-centro-01", 896, 1195, { titulo: "Hilera de fachadas", alt: "Calle con fachadas amarilla, roja y azul y letreros pintados, entre ellos Maderas Ríos Mar", autor: EQUIPO_FOTO }),
@@ -264,7 +262,7 @@ window.SITE = {
       },
       {
         id: "san-roque", nombre: "San Roque", color: "hoja",
-        descripcion: "Restaurantes, tiendas, misceláneas y depósitos de madera con letras de todos los estilos. Registro del 25 de octubre de 2026.",
+        descripcion: "Restaurantes, tiendas y misceláneas con letras de todos los estilos.",
         mapa: { x: 48, y: 74 },
         fotos: [
           foto("img/san-roque/san-roque-03", 1200, 1600, { titulo: "Restaurante La Vieja Elvira", alt: "Letrero de pie con las palabras Restaurante La Vieja Elvira y un plato pintado", fecha: "25 de octubre de 2026", autor: EQUIPO_FOTO }),
@@ -288,11 +286,11 @@ window.SITE = {
   /* ---------------- 7. TALLER CON ESTUDIANTES ---------------- */
   taller: {
     titulo: "Taller con estudiantes",
-    intro: "Validamos la cartilla con estudiantes de la Institución Universitaria de Barranquilla los días 11 y 18 de noviembre de 2026: practicaron trazos, el abecedario tipo bloque y el abecedario con efectos.",
+    intro: "Pusimos a prueba la cartilla con estudiantes de la IUB en noviembre de 2026. Así les fue.",
     proceso: [
-      { titulo: "Trazos básicos", texto: "Fustes, barras, curvas y arcos con pincel plano." },
-      { titulo: "Abecedario bloque", texto: "Letra de trazo único sobre las plantillas de práctica." },
-      { titulo: "Letra con efectos", texto: "Volumen, degradado y sombra, color por color." },
+      { titulo: "Trazos básicos", texto: "Rectas, curvas y arcos." },
+      { titulo: "Abecedario bloque", texto: "Letra por letra, sobre plantilla." },
+      { titulo: "Letra con efectos", texto: "Volumen, degradado y sombra." },
       { titulo: "Evaluación", texto: "[PENDIENTE: describir cómo se evaluó la cartilla.]" },
     ],
     /* Comparaciones antes/después: deja antes/despues en null para ver el espacio de espera */
@@ -337,24 +335,24 @@ window.SITE = {
   /* ---------------- 8. EL OFICIO PASO A PASO ---------------- */
   oficio: {
     titulo: "El proceso de rotulación en 8 pasos",
-    intro: "Así se transforma una letra: se parte de una forma sencilla y, paso a paso, se le va dando carácter hasta los efectos finales.",
+    intro: "De una letra sencilla a un letrero con todo el sabor, en 8 pasos.",
     pasos: [
-      { titulo: "Estructura base", texto: "Parte de un estilo simple y familiar como referencia." },
-      { titulo: "Grosor", texto: "Destaca elementos del original, como engrosar los bastones verticales." },
-      { titulo: "Remates", texto: "Experimenta modificando la forma y el estilo de las serifas." },
-      { titulo: "Suavizado", texto: "Redondea los bordes para aportar carácter, encanto y calidez." },
-      { titulo: "Estilo", texto: "Explora variantes tipográficas, como remates partidos o estilo western." },
-      { titulo: "Florituras", texto: "Extiende partes de las letras fuera de las líneas guía para darles personalidad." },
-      { titulo: "Ornamentación", texto: "Incorpora elementos decorativos con un enfoque ilustrativo." },
-      { titulo: "Efectos finales", texto: "Define los detalles antes de añadir sombras, contornos y líneas internas." },
+      { titulo: "Estructura base", texto: "Arranca con una letra simple." },
+      { titulo: "Grosor", texto: "Engruesa los trazos verticales." },
+      { titulo: "Remates", texto: "Juega con las serifas." },
+      { titulo: "Suavizado", texto: "Redondea las puntas." },
+      { titulo: "Estilo", texto: "Prueba otras formas, como el estilo western." },
+      { titulo: "Florituras", texto: "Deja que la letra se salga de la línea." },
+      { titulo: "Ornamentación", texto: "Suma adornos." },
+      { titulo: "Efectos finales", texto: "Sombras, contornos y brillos." },
     ],
     recuadros: [
-      { titulo: "De la mente a la pared", texto: "La idea nace en la imaginación, se dibuja en un borrador a lápiz, a veces se pasa a digital para ver cómo queda y solo cuando está perfecta se pinta a mano sobre la pared, la tela o la superficie final." },
-      { titulo: "El truco de la cuadrícula", texto: "Para que las letras no queden torcidas ni amontonadas, primero se dibuja una cuadrícula, como la de un cuaderno de matemáticas, que se ajusta al espacio de trabajo." },
+      { titulo: "De la mente a la pared", texto: "Idea, boceto a lápiz y, cuando está perfecto, a la pared." },
+      { titulo: "El truco de la cuadrícula", texto: "Una cuadrícula como la del cuaderno y tus letras no se tuercen." },
     ],
     plantillas: {
       titulo: "Plantillas de práctica",
-      texto: "Cuadrícula, tipos de trazos, abecedario tipo bloque y abecedario con efectos. Las plantillas de abecedario fueron realizadas por Yeison Romero. Imprime y practica.",
+      texto: "Cuadrícula, trazos y abecedarios hechos por Yeison Romero. Imprímelas y ¡manos a la obra!",
       archivo: "descargas/a-pulso-plantillas-practica.pdf",
       detalle: "PDF · 13 páginas · 0,9 MB",
     },
@@ -373,9 +371,9 @@ window.SITE = {
     ],
     asesor: "[PENDIENTE: nombre del asesor o asesora]",
     agradecimientos: [
-      "A Yeison Romero, letrerista barranquillero, por abrirnos su taller y compartir con generosidad su oficio, su historia y su manera de ver la ciudad a través de sus letreros.",
+      "A Yeison Romero, por abrirnos su taller y compartir su oficio.",
       "Al diseñador Luis Corena, por su mirada crítica y honesta.",
-      "A quienes, desde las calles y los talleres, siguen llenando de arte y color la identidad visual de Barranquilla.",
+      "A quienes siguen llenando de color las calles de Barranquilla.",
     ],
     referencias: [
       "Campbell, V. (s. f.). How to win an election in ancient Rome. History Today.",

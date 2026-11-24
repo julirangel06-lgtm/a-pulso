@@ -266,39 +266,47 @@ mark.pendiente {
 .p-silla { width: 140px; left: -20px; bottom: 30px; opacity: .95; display: none; }
 @media (min-width: 1200px) { .p-silla { display: block; } }
 
-/* ---------- 3. LÍNEA DE TIEMPO ---------- */
-.historia { background: var(--c-hueso) url("../img/textura-pared.webp") center / 600px auto; }
-.historia .rotulo { text-align: center; }
-.historia .intro { margin-inline: auto; text-align: center; }
-.linea { position: relative; z-index: 2; }
-.linea__controles { display: flex; justify-content: center; gap: 1rem; margin: 1.5rem 0 .5rem; }
-.linea__pista {
-  list-style: none; margin: 0; padding: 2.5rem max(1.25rem, calc((100vw - var(--ancho)) / 2)) 2rem;
-  display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin;
-  scrollbar-color: var(--c-vivo) transparent; cursor: grab;
+/* ---------- 3. LÍNEA DE TIEMPO (slide horizontal al bajar) ---------- */
+.historia { background: var(--c-hueso) url("../img/textura-pared.webp") center / 600px auto; padding: 0; overflow: clip; }
+.hist { position: relative; }
+.hist__fijo {
+  position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center; gap: clamp(.8rem, 2.5vh, 1.6rem); padding: 64px 0 2.2rem;
 }
-.linea__pista.arrastrando { cursor: grabbing; scroll-snap-type: none; user-select: none; }
-.linea__pista::before {
-  content: ""; position: absolute; left: 0; right: 0; top: 2.5rem; height: 4px; z-index: -1;
-  background: repeating-linear-gradient(90deg, var(--c-petroleo) 0 14px, transparent 14px 22px);
+.hist__cab { text-align: center; }
+.hist__cab .rotulo { font-size: clamp(2rem, 6vw, 4rem); line-height: 1.08; margin-bottom: .25em; }
+.hist__cab .intro { margin: 0 auto; font-weight: 500; }
+.hist__pista {
+  list-style: none; margin: 0; display: flex; gap: clamp(1rem, 3vw, 2rem); width: max-content;
+  padding: .8rem max(1.25rem, calc((100vw - var(--ancho)) / 2)) 1rem; will-change: transform;
 }
+.hist--libre .hist__fijo { position: static; height: auto; padding-block: 4rem 3rem; }
+.hist--libre .hist__pista { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; }
+.hist--libre .hito { scroll-snap-align: center; }
 .hito {
-  flex: 0 0 min(300px, 82vw); scroll-snap-align: center; background: #fff; border: 3px solid var(--c-petroleo);
-  border-radius: 10px; box-shadow: 6px 6px 0 var(--c-petroleo); position: relative; display: flex; flex-direction: column;
+  flex: 0 0 clamp(250px, 30vw, 330px); background: #fff; border: 3px solid var(--c-petroleo); border-radius: 12px;
+  box-shadow: 7px 7px 0 var(--fondo), 7px 7px 0 3px var(--c-petroleo); position: relative; display: flex; flex-direction: column; overflow: hidden;
 }
-.hito:nth-child(odd) { transform: rotate(-1deg); } .hito:nth-child(even) { transform: rotate(1deg) translateY(12px); }
-.hito__cuerda { position: absolute; top: -2.5rem; left: 50%; width: 3px; height: 2.5rem; background: var(--c-petroleo); }
-.hito__cuerda::after { content: ""; position: absolute; top: 2rem; left: -6px; width: 15px; height: 15px; border-radius: 50%; background: var(--c-petroleo); }
-.hito__cab { background: var(--fondo); padding: .7rem 1rem .5rem; border-radius: 7px 7px 0 0; border-bottom: 3px solid var(--c-petroleo); color: #fff; }
-.hito[style*="mango"] .hito__cab, .hito[style*="turquesa"] .hito__cab, .hito[style*="letrero"] .hito__cab { color: var(--tinta); }
-.hito__fecha { display: block; font-family: var(--f-rotulo); font-size: 1.9rem; text-transform: uppercase; line-height: 1; }
-.hito__lugar { font-family: var(--f-acento); font-size: 1.1rem; }
-.hito__img { height: 170px; display: grid; place-items: center; padding: .8rem; background: var(--c-gris); }
-.hito__img img { max-height: 150px; width: auto; object-fit: contain; filter: drop-shadow(3px 3px 0 rgba(0,0,0,.15)); }
-.hito__cuerpo { padding: 1rem 1.1rem 1.2rem; font-size: .95rem; }
-.hito__cuerpo h3 { font-family: var(--f-rotulo); font-weight: 400; text-transform: uppercase; font-size: 1.3rem; color: var(--c-petroleo); margin-bottom: .5rem; }
-.hito__fuente { font-size: .76rem; color: #4b5552; margin: 0; }
-.hito__flecha { position: absolute; right: -22px; top: 46%; font-family: var(--f-rotulo); font-size: 1.6rem; color: var(--c-vivo); z-index: 2; }
+.hito:nth-child(odd) { transform: rotate(-1.2deg); } .hito:nth-child(even) { transform: rotate(1.2deg) translateY(10px); }
+.hito__num {
+  position: absolute; top: .6rem; right: .6rem; z-index: 2; font-family: var(--f-rotulo); font-size: .85rem; background: var(--c-mango);
+  color: var(--c-petroleo); border: 2px solid var(--c-petroleo); border-radius: 999px; padding: .05rem .55rem;
+}
+.hito__img { height: clamp(110px, 20vh, 170px); flex: none; display: flex; align-items: center; justify-content: center; padding: .7rem; background: var(--fondo); border-bottom: 3px solid var(--c-petroleo); overflow: hidden; }
+.hito__img img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(4px 4px 0 rgba(0,0,0,.25)); }
+.hito__cuerpo { padding: .9rem 1.1rem 1rem; }
+.hito__fecha { font-family: var(--f-rotulo); text-transform: uppercase; color: var(--c-vivo); font-size: clamp(1.5rem, 3.4vw, 2.1rem); line-height: 1; margin: 0 0 .35rem; }
+.hito__lugar { display: block; font-family: var(--f-acento); text-transform: none; color: var(--c-petroleo); font-size: 1rem; margin-top: .2rem; }
+.hito__cuerpo h3 { font-family: var(--f-rotulo); font-weight: 400; text-transform: uppercase; color: var(--c-petroleo); font-size: 1.15rem; margin-bottom: .35rem; }
+.hito__cuerpo p { font-size: .95rem; line-height: 1.45; margin-bottom: .5rem; }
+.hito__cuerpo .hito__fuente { font-size: .68rem; color: #59625f; margin: 0; line-height: 1.3; }
+.hist__barra { position: relative; height: 8px; margin: 1.2rem auto 0; width: min(100% - 4rem, 720px); background: rgba(11, 83, 86, .18); border-radius: 99px; }
+.hist__barra span { position: absolute; inset: 0 auto 0 0; width: 0; background: linear-gradient(90deg, var(--c-mango), var(--c-vivo), var(--c-hoja)); border-radius: 99px; }
+.hist__barra i { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: #fff; border: 3px solid var(--c-petroleo); }
+.hist__barra b { position: absolute; top: 14px; left: 50%; translate: -50% 0; font: 700 .62rem var(--f-texto); color: var(--c-petroleo); white-space: nowrap; display: none; }
+@media (min-width: 900px) { .hist__barra b { display: block; } }
+.hist--libre .hist__barra { display: none; }
+@media (max-height: 640px) { .hito__cuerpo .hito__fuente { display: none; } .hist__cab .intro { display: none; } }
 
 /* ---------- 4. LETRERISTA ---------- */
 .letrerista { background: var(--c-mango); color: var(--tinta); }
@@ -311,6 +319,14 @@ mark.pendiente {
 .l-latas { width: 130px; right: -14px; bottom: -8px; z-index: 3 !important; }
 .l-ast { position: absolute; font-size: 3.5rem; top: 0; right: 10%; z-index: 3; }
 .letrerista__texto p { max-width: 62ch; }
+@media (max-width: 899px) {
+  .letrerista__texto { text-align: center; }
+  .letrerista__texto .titulo-img img { margin-inline: auto; }
+  .letrerista__texto p { margin-inline: auto; }
+  .letrerista .subrotulo { display: table; margin-inline: auto; }
+  .letrerista .filtros { justify-content: center; }
+  .consejo { text-align: center; }
+}
 .cita { margin-block: 3.5rem 1rem; text-align: center; }
 .cita blockquote { margin: 0; }
 .cita p {
