@@ -83,7 +83,7 @@ window.SITE = {
      color: rojo | vivo | hoja | petroleo | turquesa | mango | letrero  */
   historia: {
     titulo: "Historia del letrerismo",
-    intro: "2.000 años de letras pintadas en 7 paradas. Sigue bajando y recórrelas.",
+    intro: "2.000 años de letras pintadas en 7 paradas.",
     hitos: [
       {
         fecha: "Siglo I d. C.", lugar: "Pompeya", color: "hoja",
@@ -328,6 +328,7 @@ window.SITE = {
   oficio: {
     titulo: "El proceso de rotulación en 8 pasos",
     intro: "De una letra sencilla a un letrero con todo el sabor, en 8 pasos.",
+    /* Cada paso muestra la H del libro en img/pasos/h1 … h8 */
     pasos: [
       { titulo: "Estructura base", texto: "Arranca con una letra simple." },
       { titulo: "Grosor", texto: "Engruesa los trazos verticales." },

@@ -90,6 +90,12 @@
         <div class="hero__botones">${h.botones.map((b) => `<a class="boton boton--${b.estilo}" href="${b.destino}">${esc(b.texto)}</a>`).join("")}</div>
         <p class="hero__frase sticker">${t(h.frase)}</p>
       </div>
+      <div class="hero__cinta" aria-hidden="true">
+        <div class="hero__cinta-pista">${[0, 1].map(() => [
+          ["hoy-no-fio-manana-si", 700, 700], ["negra-sabor", 334, 354], ["asado-cartel", 810, 900],
+          ["donde-rafa", 355, 532], ["super-combo", 415, 421], ["hoy-no-fio", 0, 0],
+        ].filter((x) => x[1]).map(([n, w, h2]) => `<img src="img/collage/${n}.webp" width="${w}" height="${h2}" alt="" loading="lazy" decoding="async"><span class="ast">✱</span>`).join("")).join("")}</div>
+      </div>
       <div class="borde borde--abajo" style="--borde:var(--c-rojo)"></div>`;
   }
 
@@ -175,7 +181,7 @@
         <div class="hist__fijo">
           <div class="contenedor hist__cab">
             <h2 id="historia-titulo" class="rotulo rotulo--degradado revela">${ast()} ${esc(h.titulo)} ${ast()}</h2>
-            <p class="intro">${t(h.intro)}</p>
+            <p class="intro">${t(h.intro)} <strong class="hist__guia" id="histPistaTxt"></strong></p>
           </div>
           <ol class="hist__pista" id="histPista" aria-label="Línea de tiempo">
             ${h.hitos.map((x, i) => `
@@ -197,10 +203,21 @@
       </div>
       <div class="borde borde--abajo" style="--borde:var(--c-mango)"></div>`;
 
-    const cont = $("#hist"), pista = $("#histPista"), prog = $("#histProg");
-    // Sin animación: la pista se desliza con el dedo o con la barra de desplazamiento
-    if (reduceMotion) { cont.classList.add("hist--libre"); return; }
-    let dist = 0, pend = false;
+    const cont = $("#hist"), pista = $("#histPista"), prog = $("#histProg"), pistaTxt = $("#histPistaTxt");
+    const movil = window.matchMedia("(max-width: 759px)");
+    let dist = 0, pend = false, modo = null;
+    // Escritorio: la sección queda fija y la pista avanza al bajar.
+    // Celular o movimiento reducido: carrusel que se desliza con el dedo.
+    const aplicarModo = () => {
+      const libre = reduceMotion || movil.matches;
+      if (libre === modo) { if (!libre) medir(); return; }
+      modo = libre;
+      cont.classList.toggle("hist--libre", libre);
+      pistaTxt.textContent = libre ? "Desliza para recorrerlas →" : "Sigue bajando y recórrelas ↓";
+      pista.style.transform = "";
+      cont.style.height = "";
+      if (!libre) medir(); else progLibre();
+    };
     const medir = () => {
       pista.style.transform = "";
       dist = Math.max(0, pista.scrollWidth - window.innerWidth);
@@ -209,16 +226,24 @@
     };
     const mover = () => {
       pend = false;
+      if (modo) return;
       const r = cont.getBoundingClientRect();
       const total = cont.offsetHeight - window.innerHeight;
       const p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
       pista.style.transform = `translate3d(${-p * dist}px,0,0)`;
       prog.style.width = `${p * 100}%`;
     };
-    window.addEventListener("scroll", () => { if (!pend) { pend = true; requestAnimationFrame(mover); } }, { passive: true });
-    window.addEventListener("resize", medir);
-    window.addEventListener("load", medir);
-    medir();
+    const progLibre = () => {
+      const max = pista.scrollWidth - pista.clientWidth;
+      prog.style.width = `${max > 0 ? (pista.scrollLeft / max) * 100 : 0}%`;
+    };
+    pista.addEventListener("scroll", () => { if (modo) progLibre(); }, { passive: true });
+    window.addEventListener("scroll", () => { if (!pend && !modo) { pend = true; requestAnimationFrame(mover); } }, { passive: true });
+    let ancho = window.innerWidth;
+    // En iPhone la barra del navegador cambia el alto al hacer scroll: solo se recalcula si cambia el ancho
+    window.addEventListener("resize", () => { if (window.innerWidth !== ancho) { ancho = window.innerWidth; modo = null; aplicarModo(); } });
+    window.addEventListener("load", () => { modo = null; aplicarModo(); });
+    aplicarModo();
   }
 
   /* ---------- 4. El letrerista ---------- */
@@ -399,15 +424,20 @@
         <div class="barrio-panel__cab">
           <h3 class="sticker sticker--barrio">${esc(b.nombre)}</h3>
           <p>${t(b.descripcion)}</p>
-          <button class="barrio-sig" type="button" data-barrio="${sig.id}">Sigue a ${esc(sig.nombre)} <span aria-hidden="true">→</span></button>
         </div>
         <div class="masonry masonry--barrio">${b.fotos.map((f, i) => `
           <figure class="masonry__item marco-amarillo">
             ${tarjetaFoto(f, "barrio", i, "(min-width: 1100px) 22vw, (min-width: 640px) 45vw, 92vw")}
             <figcaption><span>${t(f.titulo)}</span><small>${[f.fecha, f.autor].filter(Boolean).map(t).join(" · ")}</small></figcaption>
           </figure>`).join("")}
+        </div>
+        <div class="barrio-fin">
+          <p>¿Ya viste ${esc(b.nombre)}? La vuelta sigue.</p>
+          <button class="barrio-sig" type="button" data-barrio="${sig.id}" style="--sig:${col(sig.color)}">
+            <small>Siguiente barrio</small><span>${esc(sig.nombre)} <span aria-hidden="true">→</span></span>
+          </button>
         </div>`;
-      $(".barrio-sig", panel).addEventListener("click", (e) => { usar(); ir(e.currentTarget.dataset.barrio); });
+      $(".barrio-sig", panel).addEventListener("click", (e) => { usar(); ir(e.currentTarget.dataset.barrio, true); });
     };
     // Al primer toque se apagan las pistas
     const usar = () => {
@@ -415,10 +445,10 @@
       tocado = true; mapa.classList.add("mapa--usado"); clearInterval(tour);
       $$(".mapa__barrio", mapa).forEach((el) => el.classList.remove("brilla"));
     };
-    const ir = (id) => {
+    const ir = (id, siempre = false) => {
       mostrar(id);
       const panel = $("#panel-barrio");
-      if (window.matchMedia("(max-width: 999px)").matches) panel.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      if (siempre || window.matchMedia("(max-width: 999px)").matches) panel.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
       panel.focus({ preventScroll: true });
     };
     mostrar(B.lista[0].id);
@@ -520,14 +550,30 @@
           <span class="sr">${esc(O.titulo)}</span>
         </h2>
         <p class="intro intro--centro">${t(O.intro)}</p>
-        <ol class="pasos">${O.pasos.map((p, i) => `
-          <li class="paso revela">
-            <span class="num-circulo num-circulo--grande" aria-hidden="true">${i + 1}</span>
-            <span class="paso__letra" aria-hidden="true" style="--n:${i}">H</span>
-            <h3><span class="sr">Paso ${i + 1}: </span>${t(p.titulo)}</h3>
-            <p>${t(p.texto)}</p>
-          </li>`).join("")}
-        </ol>
+        <div class="letra-viva revela" id="letraViva">
+          <div class="escenario" id="escenario">
+            <div class="escenario__letra" aria-hidden="true">
+              ${O.pasos.map((p, i) => `<img src="img/pasos/h${i + 1}.webp" alt="" data-i="${i}" ${i ? 'loading="lazy"' : ""} decoding="async">`).join("")}
+              ${ast("escenario__ast gira")}
+            </div>
+            <div class="escenario__info" aria-live="polite">
+              <p class="escenario__paso">Paso <b id="pasoNum">1</b> de ${O.pasos.length}</p>
+              <h3 id="pasoTitulo">${t(O.pasos[0].titulo)}</h3>
+              <p id="pasoTexto">${t(O.pasos[0].texto)}</p>
+              <div class="escenario__ctrl">
+                <button class="boton-redondo" type="button" data-mover="-1" aria-label="Paso anterior">‹</button>
+                <button class="boton-redondo escenario__play" type="button" id="pasoPlay" aria-label="Pausar">❚❚</button>
+                <button class="boton-redondo" type="button" data-mover="1" aria-label="Paso siguiente">›</button>
+              </div>
+            </div>
+            <div class="escenario__barra" aria-hidden="true"><span id="pasoBarra"></span></div>
+          </div>
+          <ol class="pasos-tira" aria-label="Los 8 pasos">
+            ${O.pasos.map((p, i) => `<li><button type="button" class="pasos-tira__btn" data-i="${i}" aria-pressed="${i === 0}">
+              <img src="img/pasos/h${i + 1}-sm.webp" alt="" loading="lazy" decoding="async"><span><b>${i + 1}</b> ${t(p.titulo)}</span>
+            </button></li>`).join("")}
+          </ol>
+        </div>
         <div class="recuadros">${O.recuadros.map((r) => `<div class="recuadro revela"><h3>${t(r.titulo)}</h3><p>${t(r.texto)}</p></div>`).join("")}</div>
         <div class="descarga revela">
           ${deco("latas", "d-latas", 366, 320)}
@@ -539,6 +585,38 @@
           </div>
         </div>
       </div>`;
+  }
+
+  /* La letra que se transforma: avanza sola mientras está en pantalla */
+  function initLetraViva() {
+    const O = S.oficio, n = O.pasos.length, caja = $("#letraViva");
+    const imgs = $$(".escenario__letra img", caja), btns = $$(".pasos-tira__btn", caja);
+    const colores = ["hueso", "mango", "turquesa", "rosado", "hueso", "mango", "turquesa", "rosado"];
+    let i = 0, timer = null, enVista = false, pausado = reduceMotion;
+    const DUR = 2800;
+    const ir = (k) => {
+      i = (k + n) % n;
+      imgs.forEach((im, j) => im.classList.toggle("activa", j === i));
+      btns.forEach((b, j) => b.setAttribute("aria-pressed", String(j === i)));
+      $("#pasoNum").textContent = i + 1;
+      $("#pasoTitulo").innerHTML = t(O.pasos[i].titulo);
+      $("#pasoTexto").innerHTML = t(O.pasos[i].texto);
+      $("#escenario").style.setProperty("--fondo", col(colores[i % colores.length]));
+      $("#escenario").classList.toggle("escenario--oscuro", ["petroleo", "hoja", "vivo"].includes(colores[i % colores.length]));
+      const barra = $("#pasoBarra"); barra.style.animation = "none"; void barra.offsetWidth;
+      barra.style.animation = pausado || !enVista ? "none" : `llenar ${DUR}ms linear forwards`;
+      barra.style.width = pausado ? `${((i + 1) / n) * 100}%` : "";
+    };
+    const arrancar = () => { clearInterval(timer); if (!pausado && enVista) timer = setInterval(() => ir(i + 1), DUR); ir(i); };
+    const parar = () => { pausado = true; clearInterval(timer); $("#pasoPlay").textContent = "▶"; $("#pasoPlay").setAttribute("aria-label", "Reproducir"); ir(i); };
+    $("#pasoPlay").addEventListener("click", () => {
+      if (pausado) { pausado = false; $("#pasoPlay").textContent = "❚❚"; $("#pasoPlay").setAttribute("aria-label", "Pausar"); arrancar(); } else parar();
+    });
+    $$("[data-mover]", caja).forEach((b) => b.addEventListener("click", () => { parar(); ir(i + Number(b.dataset.mover)); }));
+    btns.forEach((b) => b.addEventListener("click", () => { parar(); ir(Number(b.dataset.i)); }));
+    if (reduceMotion) { $("#pasoPlay").textContent = "▶"; $("#pasoPlay").setAttribute("aria-label", "Reproducir"); }
+    new IntersectionObserver((en) => { enVista = en[0].isIntersecting; if (enVista) arrancar(); else clearInterval(timer); }, { threshold: 0.35 }).observe($("#escenario"));
+    ir(0);
   }
 
   /* ---------- 9. Pie ---------- */
@@ -646,5 +724,5 @@
   document.title = S.meta.titulo;
   renderNav(); renderHero(); renderProyecto(); renderHistoria(); renderLetrerista();
   renderEntrevistas(); renderBarrios(); renderTaller(); renderOficio(); renderPie();
-  initLightbox(); initVisor(); initRevela();
+  initLightbox(); initVisor(); initLetraViva(); initRevela();
 })();
