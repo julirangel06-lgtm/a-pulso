@@ -279,7 +279,7 @@
       <div class="contenedor">
         <h2 id="entrevistas-titulo" class="rotulo rotulo--amarillo revela">${esc(E.titulo)}</h2>
         <p class="intro intro--claro">${t(E.intro)}</p>
-        <div class="episodios">
+        <div class="episodios${E.episodios.length === 1 ? " episodios--uno" : ""}">
           ${E.episodios.map((ep, i) => {
             registrar(`ep${i}`, ep.galeria.map((g) => ({ ...g, pie: pieFoto(g, `${esc(ep.ep)} · ${esc(ep.invitado)}`) })));
             return `
@@ -290,19 +290,24 @@
                 <h3 class="afiche__titulo">${t(ep.titulo)}</h3>
                 <p class="afiche__con">con <strong>${esc(ep.invitado)}</strong></p>
               </header>
-              <div class="afiche__media">
-                <div class="estampilla-sombra"><div class="estampilla estampilla--blanca">${img(ep.miniatura, { sizes: "(min-width: 900px) 520px, 90vw" })}</div></div>
+              <div class="afiche__cuerpo">
+                <div class="afiche__media">
+                  <div class="estampilla-sombra"><div class="estampilla estampilla--blanca">${ep.video
+                    ? `<video class="afiche__video" src="${ep.video.src}" poster="${ep.video.poster}" muted loop playsinline preload="none" aria-label="${esc(ep.video.alt)}"></video>`
+                    : img(ep.miniatura, { sizes: "(min-width: 900px) 520px, 90vw" })}</div></div>
+                </div>
+                <div class="afiche__info">
+                  <dl class="afiche__meta">
+                    <div><dt>${esc(ep.etiquetaFecha || "Fecha")}</dt><dd>${t(ep.fecha)}</dd></div>
+                    <div><dt>Duración</dt><dd>${t(ep.duracion)}</dd></div>
+                  </dl>
+                  ${reproductor(ep, i)}
+                  ${ep.transcripcion && ep.transcripcion.length ? `<details class="transcripcion">
+                    <summary>Leer la transcripción</summary>
+                    <div>${ep.transcripcion.map((p) => `<p>${t(p)}</p>`).join("")}</div>
+                  </details>` : ""}
+                </div>
               </div>
-              <dl class="afiche__meta">
-                <div><dt>Fecha</dt><dd>${t(ep.fecha)}</dd></div>
-                <div><dt>Duración</dt><dd>${t(ep.duracion)}</dd></div>
-              </dl>
-              ${reproductor(ep, i)}
-              ${ep.video ? `<video class="afiche__video" src="${ep.video.src}" poster="${ep.video.poster}" muted loop playsinline preload="none" controls aria-label="${esc(ep.video.alt)}"></video>` : ""}
-              <details class="transcripcion">
-                <summary>Leer la transcripción</summary>
-                <div>${ep.transcripcion.map((p) => `<p>${t(p)}</p>`).join("")}</div>
-              </details>
               <ul class="tira" aria-label="Fotos de la sesión">
                 ${ep.galeria.map((g, j) => `<li>${tarjetaFoto(g, `ep${i}`, j, "160px")}</li>`).join("")}
               </ul>

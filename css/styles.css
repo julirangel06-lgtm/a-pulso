@@ -403,7 +403,7 @@ mark.pendiente {
 .afiche__con { font-family: var(--f-acento); font-size: 1.25rem; margin: 0; }
 .afiche__media { padding: 1.4rem 1.4rem 0; }
 .afiche__media .estampilla-sombra { transform: rotate(-1.2deg); }
-.afiche__media img { aspect-ratio: 16 / 10; object-fit: cover; }
+.afiche__media img, .afiche__media video { aspect-ratio: 16 / 10; object-fit: cover; }
 .afiche__meta { display: flex; gap: 1.5rem; justify-content: center; margin: 1.2rem 1.4rem; font-size: .95rem; }
 .afiche__meta dt { font-family: var(--f-rotulo); text-transform: uppercase; color: var(--c-vivo); font-size: .85rem; }
 .afiche__meta dd { margin: 0; font-weight: 700; }
@@ -416,7 +416,15 @@ mark.pendiente {
 }
 .reproductor--espera p { margin: 0; line-height: 1.35; }
 .play { width: 54px; height: 54px; flex: none; border-radius: 50%; background: var(--c-vivo); display: grid; place-items: center; font-size: 1.3rem; border: 3px solid #fff; }
-.afiche__video { width: calc(100% - 2.8rem); margin: 0 1.4rem 1rem; border-radius: 8px; border: 3px solid #111; aspect-ratio: 16/9; object-fit: cover; background: #000; }
+.afiche__video { width: 100%; display: block; aspect-ratio: 16 / 10; object-fit: cover; background: #000; }
+.afiche__cuerpo { display: grid; }
+.afiche__info { padding-top: .2rem; }
+.episodios--uno { grid-template-columns: 1fr !important; max-width: 1040px; margin-inline: auto; }
+@media (min-width: 900px) {
+  .episodios--uno .afiche__cuerpo { grid-template-columns: 1.05fr 1fr; align-items: center; gap: .5rem; padding-right: 1rem; }
+  .episodios--uno .afiche__media { padding-bottom: 1.4rem; }
+  .episodios--uno .afiche__meta { justify-content: flex-start; margin-left: 1.4rem; }
+}
 .transcripcion { margin: 0 1.4rem 1rem; border: 3px solid var(--c-petroleo); border-radius: 8px; background: #fff; }
 .transcripcion summary {
   cursor: pointer; font-family: var(--f-rotulo); text-transform: uppercase; color: var(--c-petroleo); padding: .7rem 1rem; list-style: none;

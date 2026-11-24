@@ -183,38 +183,28 @@ window.SITE = {
      Mientras el id esté vacío se muestra el afiche de espera. */
   entrevistas: {
     titulo: "Entrevistas",
-    intro: "Siéntate en el taller con Yeison: cómo empezó y cómo nace una letra.",
+    intro: "Dale play y siéntate en el taller con Yeison: cómo empezó y cómo nace una letra.",
     episodios: [
       {
         ep: "Ep. 1",
         titulo: "El arte de hacer letras",
         invitado: "Yeison Romero",
-        fecha: "3 de octubre de 2026",
-        duracion: "[PENDIENTE]",
+        fecha: "14 de noviembre de 2026",
+        etiquetaFecha: "Publicado",
+        duracion: "11 min",
         color: "vivo",
-        miniatura: foto("img/entrevista-2/entrevista-2-08", 1600, 900, { alt: "Yeison Romero pinta con pincel las letras A PULSO en degradado sobre papel amarillo" }),
-        embed: { tipo: "youtube", id: "" },
-        transcripcion: ["[PENDIENTE: pegar aquí la transcripción del episodio 1, un párrafo por elemento de la lista.]"],
+        /* Video corto del taller que acompaña al episodio */
+        video: { src: "video/yeison-taller.mp4", poster: "video/yeison-taller.webp", alt: "Yeison Romero trabaja con aerógrafo en su taller" },
+        miniatura: foto("img/entrevista-1/entrevista-1-02", 1200, 1600, { alt: "Yeison Romero pinta con aerógrafo un panel azul con las letras A PULSO" }),
+        embed: { tipo: "spotify", id: "3kzMPGXn6pcVPbKgYFKvu5" },
+        /* Deja la lista vacía para ocultar la transcripción */
+        transcripcion: [],
         galeria: [
           foto("img/entrevista-2/entrevista-2-05", 1600, 900, { alt: "Yeison pinta un abecedario en azul sobre papel amarillo", autor: EQUIPO_FOTO, fecha: "3 de octubre de 2026" }),
           foto("img/entrevista-2/entrevista-2-09", 1600, 900, { alt: "Yeison concentrado mientras pinta un letrero en su mesa de trabajo", autor: EQUIPO_FOTO, fecha: "3 de octubre de 2026" }),
           foto("img/entrevista-2/entrevista-2-03", 1600, 1200, { alt: "Latas de pintura en aerosol de colores sobre una mesa del taller", autor: EQUIPO_FOTO, fecha: "3 de octubre de 2026" }),
           foto("img/entrevista-2/entrevista-2-04", 1600, 1200, { alt: "Panel pintado con un tiburón y un guerrero en llamas", autor: EQUIPO_FOTO, fecha: "3 de octubre de 2026" }),
           foto("img/entrevista-2/entrevista-2-01", 1200, 1600, { alt: "Un telón con letras se pinta extendido en el piso de la calle", autor: EQUIPO_FOTO, fecha: "3 de octubre de 2026" }),
-        ],
-      },
-      {
-        ep: "Ep. 2",
-        titulo: "[PENDIENTE: título del episodio 2]",
-        invitado: "Yeison Romero",
-        fecha: "6 de noviembre de 2026",
-        duracion: "[PENDIENTE]",
-        color: "turquesa",
-        miniatura: foto("img/entrevista-1/entrevista-1-02", 1200, 1600, { alt: "Yeison Romero pinta con aerógrafo un panel azul con las letras A PULSO" }),
-        video: { src: "video/yeison-taller.mp4", poster: "video/yeison-taller.webp", alt: "Yeison Romero trabaja con aerógrafo en su taller" },
-        embed: { tipo: "spotify", id: "" },
-        transcripcion: ["[PENDIENTE: pegar aquí la transcripción del episodio 2.]"],
-        galeria: [
           foto("img/entrevista-1/entrevista-1-03", 1200, 1600, { alt: "Detalle del aerógrafo sobre letras azules en el panel", autor: EQUIPO_FOTO, fecha: "6 de noviembre de 2026" }),
           foto("img/entrevista-1/entrevista-1-05", 900, 1600, { alt: "Letras minúsculas en degradado pintadas sobre papel en el piso", autor: EQUIPO_FOTO, fecha: "6 de noviembre de 2026" }),
           foto("img/entrevista-1/entrevista-1-08", 1200, 1600, { alt: "Yeison agachado pinta un abecedario con efectos sobre papel", autor: EQUIPO_FOTO, fecha: "6 de noviembre de 2026" }),
