@@ -208,7 +208,7 @@ mark.pendiente {
 .h-nube2 { width: 110px; right: 18%; bottom: 20%; }
 .h-negra { width: 150px; left: 2%; bottom: 8%; rotate: -8deg; }
 .h-rafa { width: 120px; right: 3%; bottom: 7%; rotate: 7deg; }
-.h-fio { display: none; }
+.h-fio { display: block; width: 104px; right: 4%; top: 118px; rotate: 6deg; z-index: 2 !important; filter: drop-shadow(3px 3px 0 rgba(11, 83, 86, .45)); }
 .h-asado { display: none; }
 .h-latas { width: 120px; left: 22%; bottom: -10px; }
 .h-pinceles { display: none; }
@@ -219,7 +219,7 @@ mark.pendiente {
 @media (min-width: 760px) {
   .h-negra { width: 210px; left: 3%; bottom: 10%; }
   .h-rafa { width: 170px; }
-  .h-fio { display: block; width: 190px; left: 5%; top: 44%; rotate: 6deg; filter: drop-shadow(5px 5px 0 rgba(11, 83, 86, .45)); }
+  .h-fio { display: block; width: 190px; left: 5%; right: auto; top: 44%; rotate: 6deg; filter: drop-shadow(5px 5px 0 rgba(11, 83, 86, .45)); }
   .h-asado { display: block; width: 170px; right: 4%; top: 40%; rotate: -6deg; }
   .h-pinceles { display: block; width: 90px; right: 20%; bottom: 0; }
   .h-loro { display: block; width: 150px; left: 14%; top: 14%; }
