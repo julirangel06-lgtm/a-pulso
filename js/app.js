@@ -34,6 +34,12 @@
     return partes.join("<br>");
   }
 
+  const ICONOS = {
+    ojo: `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 24s8-13 20-13 20 13 20 13-8 13-20 13S4 24 4 24z" fill="#fff" stroke="#111" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="24" r="8" fill="var(--c-turquesa)" stroke="#111" stroke-width="3"/><circle cx="24" cy="24" r="3.5" fill="#111"/><circle cx="27" cy="21" r="1.6" fill="#fff"/></svg>`,
+    pincel: `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M30 6l12 12-16 16-12-12z" fill="var(--c-mango)" stroke="#111" stroke-width="3" stroke-linejoin="round"/><path d="M14 22l12 12-4 4c-4 4-12 6-16 6 0-4 2-12 6-16z" fill="var(--c-vivo)" stroke="#111" stroke-width="3" stroke-linejoin="round"/><path d="M33 13l3 3" stroke="#111" stroke-width="3" stroke-linecap="round"/></svg>`,
+    papel: `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 5h20l9 9v29H10z" fill="#fff" stroke="#111" stroke-width="3" stroke-linejoin="round"/><path d="M30 5v9h9" fill="none" stroke="#111" stroke-width="3" stroke-linejoin="round"/><path d="M16 21h12M16 27h8" stroke="#111" stroke-width="3" stroke-linecap="round"/><path d="M29 30l2.3 4.6 5.1.7-3.7 3.6.9 5.1-4.6-2.4-4.6 2.4.9-5.1-3.7-3.6 5.1-.7z" fill="var(--c-mango)" stroke="#111" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  };
+
   /* ---------- lightbox con grupos ---------- */
   const grupos = {};
   function registrar(grupo, items) { grupos[grupo] = items; }
@@ -240,11 +246,15 @@
         <figcaption>${t(L.cita.fuente)}</figcaption>
       </figure>
       <div class="contenedor">
-        <h3 class="subrotulo subrotulo--oscuro">Consejos del maestro</h3>
+        <h3 class="subrotulo subrotulo--oscuro subrotulo--centro">Consejos del maestro</h3>
         <ul class="consejos">${L.consejos.map((c, i) => `
-          <li class="consejo revela" style="--fondo:${col(["vivo", "hoja", "turquesa"][i % 3])}; --giro:${[-2, 1.5, -1][i % 3]}deg">
+          <li class="consejo revela" style="--fondo:${col(["vivo", "hoja", "turquesa"][i % 3])}; --giro:${[-2, 1.5, -1][i % 3]}deg; --retraso:${i * -1.3}s">
             <span class="consejo__cuerda" aria-hidden="true"></span>
-            <h4>${t(c.titulo)}</h4><p>${t(c.texto)}</p>
+            <div class="consejo__letrero">
+              <span class="consejo__icono">${ICONOS[c.icono] || ""}</span>
+              <span class="consejo__num">Consejo ${i + 1}</span>
+              <h4>${t(c.titulo)}</h4><p>${t(c.texto)}</p>
+            </div>
           </li>`).join("")}
         </ul>
         <h3 class="subrotulo subrotulo--oscuro" id="obras-titulo">Galería de obras</h3>
@@ -339,14 +349,12 @@
       "el-centro": "M42 24 C 58 18, 80 24, 80 40 C 82 56, 70 62, 54 60 C 42 58, 38 44, 42 24 Z",
       "san-roque": "M28 58 C 40 54, 62 58, 68 68 C 74 82, 60 94, 44 92 C 28 90, 20 76, 28 58 Z",
     };
-    const ruta = lista.map((b, i) => `${i ? "L" : "M"}${b.mapa.x} ${b.mapa.y}`).join(" ");
     return `<svg class="mapa__svg" viewBox="0 0 100 100" role="group" aria-label="Mapa ilustrado: toca un barrio para ver sus letreros">
       <defs><pattern id="olas" width="8" height="4" patternUnits="userSpaceOnUse"><path d="M0 2 Q2 0 4 2 T8 2" fill="none" stroke="#fff" stroke-width=".5" opacity=".6"/></pattern></defs>
       <path d="M84 0 C 90 20, 86 40, 92 60 C 96 76, 90 90, 94 100 L100 100 L100 0 Z" fill="var(--c-turquesa)"/>
       <path class="mapa__olas" d="M84 0 C 90 20, 86 40, 92 60 C 96 76, 90 90, 94 100 L100 100 L100 0 Z" fill="url(#olas)"/>
       <text x="95" y="48" class="mapa__rio" transform="rotate(84 95 48)">Río Magdalena</text>
       ${lista.map((b) => `<path class="mapa__barrio" d="${formas[b.id] || ""}" fill="${col(b.color)}" data-barrio="${b.id}"/>`).join("")}
-      <path class="mapa__ruta" d="${ruta}" />
       ${lista.map((b) => `
         <g class="mapa__punto" data-barrio="${b.id}" tabindex="0" role="button" aria-pressed="false" aria-label="Ver los letreros de ${esc(b.nombre)}">
           <circle class="mapa__onda" cx="${b.mapa.x}" cy="${b.mapa.y}" r="4.4"/>

@@ -152,9 +152,9 @@ window.SITE = {
       fuente: "Yeison Romero, entrevista del 3 de octubre de 2026",
     },
     consejos: [
-      { titulo: "Aprende a mirar", texto: "Antes de coger el pincel, observa cómo se mueve la mano." },
-      { titulo: "Busca un maestro", texto: "Los secretos del oficio se aprenden al lado de alguien que ya lo sabe." },
-      { titulo: "¡No botes tus errores!", texto: "Guárdalos: mañana verás cuánto has mejorado." },
+      { icono: "ojo", titulo: "Aprende a mirar", texto: "Antes de coger el pincel, observa cómo se mueve la mano." },
+      { icono: "pincel", titulo: "Busca un maestro", texto: "Los secretos del oficio se aprenden al lado de alguien que ya lo sabe." },
+      { icono: "papel", titulo: "¡No botes tus errores!", texto: "Guárdalos: mañana verás cuánto has mejorado." },
     ],
     /* tipo: debe coincidir con uno de "tipos" */
     tipos: ["Picós", "Telones y murales", "Letreros"],

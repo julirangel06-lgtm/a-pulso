@@ -325,7 +325,6 @@ mark.pendiente {
   .letrerista__texto p { margin-inline: auto; }
   .letrerista .subrotulo { display: table; margin-inline: auto; }
   .letrerista .filtros { justify-content: center; }
-  .consejo { text-align: center; }
 }
 .cita { margin-block: 3.5rem 1rem; text-align: center; }
 .cita blockquote { margin: 0; }
@@ -335,17 +334,34 @@ mark.pendiente {
   transform: rotate(-2deg); max-width: 22ch; margin-inline: auto;
 }
 .cita figcaption { font-family: var(--f-acento); font-size: 1.25rem; color: var(--c-petroleo); }
-.consejos { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: 2.2rem 1.6rem; }
+.subrotulo--centro { display: table; margin-inline: auto; }
+.consejos { list-style: none; padding: 0; margin: 0 0 1.5rem; display: grid; gap: 3rem 2rem; }
 @media (min-width: 760px) { .consejos { grid-template-columns: repeat(3, 1fr); } }
-.consejo {
-  position: relative; background: var(--fondo); color: #fff; padding: 1.3rem 1.3rem 1.1rem; border: 3px solid #111;
-  box-shadow: 5px 5px 0 #111; transform: rotate(var(--giro)); margin-top: 1.4rem;
+.consejo { position: relative; padding-top: 2.6rem; text-align: center; }
+.consejo__cuerda {
+  position: absolute; top: 0; left: 50%; width: 70%; height: 3.4rem; translate: -50% 0; z-index: 0;
+  background: linear-gradient(to bottom right, transparent calc(50% - 1.5px), #111 calc(50% - 1.5px) calc(50% + 1.5px), transparent calc(50% + 1.5px)) left / 50% 100% no-repeat,
+              linear-gradient(to bottom left, transparent calc(50% - 1.5px), #111 calc(50% - 1.5px) calc(50% + 1.5px), transparent calc(50% + 1.5px)) right / 50% 100% no-repeat;
 }
-.consejo[style*="turquesa"] { color: var(--tinta); }
-.consejo[style*="hoja"] { background: #557323; }
-.consejo__cuerda { position: absolute; top: -1.6rem; left: 50%; width: 3px; height: 1.6rem; background: #111; }
-.consejo h4 { font-family: var(--f-rotulo); font-weight: 400; text-transform: uppercase; font-size: 1.45rem; margin-bottom: .4rem; }
-.consejo p { margin: 0; font-size: .98rem; }
+.consejo__cuerda::before { content: ""; position: absolute; top: -7px; left: 50%; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: var(--c-mango); border: 3px solid #111; box-shadow: 2px 2px 0 #111; }
+.consejo__letrero {
+  position: relative; z-index: 1; background: var(--fondo); color: #fff; border: 3px solid #111; border-radius: 10px;
+  padding: 3rem 1.4rem 1.5rem; box-shadow: 6px 6px 0 #111; transform: rotate(var(--giro)); transform-origin: top center;
+  animation: columpio 5s ease-in-out infinite; animation-delay: var(--retraso);
+}
+.consejo:hover .consejo__letrero { animation-play-state: paused; }
+@keyframes columpio { 0%, 100% { rotate: -1.5deg; } 50% { rotate: 1.5deg; } }
+.consejo[style*="turquesa"] .consejo__letrero { color: var(--tinta); }
+.consejo[style*="hoja"] .consejo__letrero { background: #557323; }
+.consejo__icono {
+  position: absolute; top: -40px; left: 50%; translate: -50% 0; width: 78px; height: 78px; border-radius: 50%;
+  background: var(--c-hueso); border: 3px solid #111; box-shadow: 4px 4px 0 #111; display: grid; place-items: center;
+}
+.consejo__icono svg { width: 48px; height: 48px; }
+.consejo__num { display: inline-block; font-family: var(--f-acento); font-size: 1.1rem; margin-bottom: .2rem; opacity: .95; }
+.consejo h4 { font-family: var(--f-rotulo); font-weight: 400; text-transform: uppercase; font-size: clamp(1.5rem, 2.4vw, 1.9rem); line-height: 1; margin-bottom: .6rem; -webkit-text-stroke: 4px #111; paint-order: stroke fill; text-shadow: 3px 3px 0 #111; color: #fff; }
+.consejo[style*="turquesa"] h4 { color: var(--c-mango); }
+.consejo p { margin: 0 auto; font-size: 1.02rem; font-weight: 500; max-width: 24ch; }
 
 .filtros { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1.4rem; }
 .filtro {
@@ -453,8 +469,6 @@ mark.pendiente {
 .mapa__barrio { stroke: #111; stroke-width: .8; opacity: .5; cursor: pointer; transition: opacity .35s, transform .35s; transform-box: fill-box; transform-origin: center; }
 .mapa__barrio:hover, .mapa__barrio.brilla { opacity: .85; transform: scale(1.04); }
 .mapa__barrio.activo { opacity: 1; }
-.mapa__ruta { fill: none; stroke: var(--c-petroleo); stroke-width: .9; stroke-dasharray: 2.2 2; stroke-linecap: round; animation: ruta 1.6s linear infinite; pointer-events: none; }
-@keyframes ruta { to { stroke-dashoffset: -8.4; } }
 .mapa__punto { cursor: pointer; outline: none; }
 .mapa__pin { fill: var(--c-mango); stroke: var(--c-petroleo); stroke-width: 1.2; transition: r .25s; }
 .mapa__punto.activo .mapa__pin { fill: #fff; stroke-width: 1.6; }
