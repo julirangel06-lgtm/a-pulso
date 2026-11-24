@@ -123,8 +123,9 @@
   function initCuentaRegresiva(c) {
     const caja = $("#descargaCartilla");
     const meta = c.disponibleDesde ? new Date(c.disponibleDesde).getTime() : 0;
-    const boton = `<a class="boton boton--amarillo boton--grande" href="${c.pdf}" download>Descargar la cartilla</a>`;
-    if (!meta || Date.now() >= meta) { caja.innerHTML = boton; return; }
+    const boton = `<button type="button" class="boton boton--amarillo boton--grande" id="abrirFlip">📖 Leer la cartilla</button>`;
+    const activar = () => { caja.innerHTML = boton; $("#abrirFlip").addEventListener("click", () => abrirFlip(c.flipbook)); };
+    if (!meta || Date.now() >= meta) { activar(); return; }
     const piezas = [["dias", "días"], ["horas", "horas"], ["min", "min"], ["seg", "seg"]];
     caja.innerHTML = `
       <div class="cuenta" role="timer" aria-labelledby="cuentaTxt">
@@ -133,19 +134,31 @@
           ${piezas.map(([k, l]) => `<span class="cuenta__ficha"><b data-k="${k}">00</b><small>${l}</small></span>`).join("")}
         </div>
         <p class="sr" aria-live="polite" id="cuentaSr"></p>
-        <span class="boton boton--grande boton--bloqueado" aria-disabled="true">🔒 Descargar la cartilla</span>
+        <span class="boton boton--grande boton--bloqueado" aria-disabled="true">🔒 Leer la cartilla</span>
       </div>`;
     const dos = (n) => String(n).padStart(2, "0");
     let ultimoDia = null;
     const tick = () => {
       const r = meta - Date.now();
-      if (r <= 0) { clearInterval(id); caja.innerHTML = boton; return; }
+      if (r <= 0) { clearInterval(id); activar(); return; }
       const v = { dias: Math.floor(r / 864e5), horas: Math.floor(r / 36e5) % 24, min: Math.floor(r / 6e4) % 60, seg: Math.floor(r / 1e3) % 60 };
       $$("[data-k]", caja).forEach((el) => { el.textContent = dos(v[el.dataset.k]); });
       if (v.dias !== ultimoDia) { ultimoDia = v.dias; $("#cuentaSr").textContent = `Faltan ${v.dias} días y ${v.horas} horas.`; }
     };
     tick();
     const id = setInterval(tick, 1000);
+  }
+
+  /* Visor de la cartilla (flipbook embebido, sin descarga) */
+  function abrirFlip(url) {
+    const dlg = $("#visorCartilla"), marco = $("#visorMarco");
+    if (!marco.querySelector("iframe")) {
+      marco.innerHTML = `<iframe src="${esc(url)}" title="Cartilla A PULSO para leer en línea" allowfullscreen allow="fullscreen" loading="lazy"></iframe>`;
+    }
+    const origen = document.activeElement;
+    dlg.showModal();
+    $("#visorCerrar").focus();
+    dlg.addEventListener("close", () => origen && origen.focus(), { once: true });
   }
 
   /* ---------- 3. Línea de tiempo: slide horizontal al bajar ---------- */
@@ -318,7 +331,7 @@
       <div class="borde borde--abajo" style="--borde:var(--c-hoja)"></div>`;
   }
 
-  /* ---------- 6. Barrios ---------- */
+  /* ---------- 6. Barrios: el mapa es la navegación ---------- */
   function mapaSVG(lista) {
     // Formas aproximadas e ilustrativas (no a escala)
     const formas = {
@@ -326,16 +339,20 @@
       "el-centro": "M42 24 C 58 18, 80 24, 80 40 C 82 56, 70 62, 54 60 C 42 58, 38 44, 42 24 Z",
       "san-roque": "M28 58 C 40 54, 62 58, 68 68 C 74 82, 60 94, 44 92 C 28 90, 20 76, 28 58 Z",
     };
-    return `<svg class="mapa__svg" viewBox="0 0 100 100" role="group" aria-label="Mapa ilustrado de los tres barrios">
+    const ruta = lista.map((b, i) => `${i ? "L" : "M"}${b.mapa.x} ${b.mapa.y}`).join(" ");
+    return `<svg class="mapa__svg" viewBox="0 0 100 100" role="group" aria-label="Mapa ilustrado: toca un barrio para ver sus letreros">
       <defs><pattern id="olas" width="8" height="4" patternUnits="userSpaceOnUse"><path d="M0 2 Q2 0 4 2 T8 2" fill="none" stroke="#fff" stroke-width=".5" opacity=".6"/></pattern></defs>
       <path d="M84 0 C 90 20, 86 40, 92 60 C 96 76, 90 90, 94 100 L100 100 L100 0 Z" fill="var(--c-turquesa)"/>
-      <path d="M84 0 C 90 20, 86 40, 92 60 C 96 76, 90 90, 94 100 L100 100 L100 0 Z" fill="url(#olas)"/>
+      <path class="mapa__olas" d="M84 0 C 90 20, 86 40, 92 60 C 96 76, 90 90, 94 100 L100 100 L100 0 Z" fill="url(#olas)"/>
       <text x="95" y="48" class="mapa__rio" transform="rotate(84 95 48)">Río Magdalena</text>
       ${lista.map((b) => `<path class="mapa__barrio" d="${formas[b.id] || ""}" fill="${col(b.color)}" data-barrio="${b.id}"/>`).join("")}
+      <path class="mapa__ruta" d="${ruta}" />
       ${lista.map((b) => `
-        <g class="mapa__punto" data-barrio="${b.id}" tabindex="0" role="button" aria-label="Ver fotos de ${esc(b.nombre)}">
-          <circle cx="${b.mapa.x}" cy="${b.mapa.y}" r="4.4" fill="var(--c-mango)" stroke="var(--c-petroleo)" stroke-width="1.2"/>
-          <text x="${b.mapa.x}" y="${b.mapa.y - 6.5}" text-anchor="middle" class="mapa__nombre">${esc(b.nombre)}</text>
+        <g class="mapa__punto" data-barrio="${b.id}" tabindex="0" role="button" aria-pressed="false" aria-label="Ver los letreros de ${esc(b.nombre)}">
+          <circle class="mapa__onda" cx="${b.mapa.x}" cy="${b.mapa.y}" r="4.4"/>
+          <circle class="mapa__onda mapa__onda--2" cx="${b.mapa.x}" cy="${b.mapa.y}" r="4.4"/>
+          <circle class="mapa__pin" cx="${b.mapa.x}" cy="${b.mapa.y}" r="4.4"/>
+          <text x="${b.mapa.x}" y="${b.mapa.y - 7}" text-anchor="middle" class="mapa__nombre">${esc(b.nombre)}</text>
         </g>`).join("")}
     </svg>`;
   }
@@ -347,51 +364,78 @@
       <div class="contenedor">
         <h2 id="barrios-titulo" class="rotulo rotulo--claro revela">${esc(B.titulo)}</h2>
         <p class="intro intro--claro">${t(B.intro)}</p>
-        <div class="barrios__cabeza">
-          <div class="pestanas" role="tablist" aria-label="Barrios">
-            ${B.lista.map((b, i) => `<button role="tab" id="tab-${b.id}" class="pestana" aria-selected="${i === 0}" aria-controls="panel-barrio" tabindex="${i === 0 ? 0 : -1}" data-barrio="${b.id}" style="--fondo:${col(b.color)}">${esc(b.nombre)}</button>`).join("")}
-          </div>
-        </div>
         <div class="barrios__grid">
-          <div class="mapa revela">${mapaSVG(B.lista)}<p class="mapa__nota">${t(B.nota)}</p></div>
-          <div id="panel-barrio" role="tabpanel" class="barrio-panel" tabindex="0"></div>
+          <div class="mapa revela">
+            ${mapaSVG(B.lista)}
+            <p class="mapa__pista" id="mapaPista" aria-hidden="true"><span class="mapa__mano">👆</span> ¡Toca un barrio!</p>
+            <p class="mapa__nota">${t(B.nota)}</p>
+          </div>
+          <div id="panel-barrio" class="barrio-panel" tabindex="-1" aria-live="polite"></div>
         </div>
       </div>
       <div class="borde borde--abajo" style="--borde:var(--c-vivo)"></div>`;
 
-    const tabs = $$(".pestana", $("#barrios"));
-    const mostrar = (id, foco = false) => {
-      const b = B.lista.find((x) => x.id === id);
-      tabs.forEach((tb) => { const on = tb.dataset.barrio === id; tb.setAttribute("aria-selected", String(on)); tb.tabIndex = on ? 0 : -1; if (on && foco) tb.focus(); });
-      $$(".mapa__barrio, .mapa__punto").forEach((el) => el.classList.toggle("activo", el.dataset.barrio === id));
-      const panel = $("#panel-barrio");
-      panel.setAttribute("aria-labelledby", `tab-${id}`);
+    const mapa = $(".mapa", $("#barrios"));
+    const puntos = $$(".mapa__punto", mapa);
+    let actual = 0, tocado = false, tour = null;
+
+    const mostrar = (id) => {
+      actual = B.lista.findIndex((x) => x.id === id);
+      const b = B.lista[actual], sig = B.lista[(actual + 1) % B.lista.length];
+      $$(".mapa__barrio, .mapa__punto", mapa).forEach((el) => el.classList.toggle("activo", el.dataset.barrio === id));
+      puntos.forEach((pt) => pt.setAttribute("aria-pressed", String(pt.dataset.barrio === id)));
       registrar("barrio", b.fotos.map((f) => ({ ...f, pie: pieFoto(f, `Barrio: ${esc(b.nombre)}`) })));
+      const panel = $("#panel-barrio");
       panel.style.setProperty("--fondo", col(b.color));
       panel.innerHTML = `
-        <div class="barrio-panel__cab"><h3 class="sticker sticker--barrio">${esc(b.nombre)}</h3><p>${t(b.descripcion)}</p></div>
+        <div class="barrio-panel__cab">
+          <h3 class="sticker sticker--barrio">${esc(b.nombre)}</h3>
+          <p>${t(b.descripcion)}</p>
+          <button class="barrio-sig" type="button" data-barrio="${sig.id}">Sigue a ${esc(sig.nombre)} <span aria-hidden="true">→</span></button>
+        </div>
         <div class="masonry masonry--barrio">${b.fotos.map((f, i) => `
           <figure class="masonry__item marco-amarillo">
             ${tarjetaFoto(f, "barrio", i, "(min-width: 1100px) 22vw, (min-width: 640px) 45vw, 92vw")}
             <figcaption><span>${t(f.titulo)}</span><small>${[f.fecha, f.autor].filter(Boolean).map(t).join(" · ")}</small></figcaption>
           </figure>`).join("")}
         </div>`;
+      $(".barrio-sig", panel).addEventListener("click", (e) => { usar(); ir(e.currentTarget.dataset.barrio); });
+    };
+    // Al primer toque se apagan las pistas
+    const usar = () => {
+      if (tocado) return;
+      tocado = true; mapa.classList.add("mapa--usado"); clearInterval(tour);
+      $$(".mapa__barrio", mapa).forEach((el) => el.classList.remove("brilla"));
+    };
+    const ir = (id) => {
+      mostrar(id);
+      const panel = $("#panel-barrio");
+      if (window.matchMedia("(max-width: 999px)").matches) panel.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      panel.focus({ preventScroll: true });
     };
     mostrar(B.lista[0].id);
-    tabs.forEach((tb, i) => {
-      tb.addEventListener("click", () => mostrar(tb.dataset.barrio));
-      tb.addEventListener("keydown", (e) => {
-        const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
-        if (k) { e.preventDefault(); mostrar(tabs[(i + k + tabs.length) % tabs.length].dataset.barrio, true); }
-        if (e.key === "Home") { e.preventDefault(); mostrar(tabs[0].dataset.barrio, true); }
-        if (e.key === "End") { e.preventDefault(); mostrar(tabs[tabs.length - 1].dataset.barrio, true); }
+
+    $$(".mapa__punto, .mapa__barrio", mapa).forEach((el) => {
+      el.addEventListener("click", () => { usar(); ir(el.dataset.barrio); });
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); usar(); ir(el.dataset.barrio); }
+        const k = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (k && el.classList.contains("mapa__punto")) { e.preventDefault(); const j = (puntos.indexOf(el) + k + puntos.length) % puntos.length; puntos[j].focus(); }
       });
     });
-    $$(".mapa__punto, .mapa__barrio").forEach((p) => {
-      const ir = () => { mostrar(p.dataset.barrio); $("#panel-barrio").focus({ preventScroll: true }); $("#panel-barrio").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); };
-      p.addEventListener("click", ir);
-      p.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ir(); } });
-    });
+
+    // Recorrido de invitación: los barrios se iluminan por turnos hasta que el usuario toca uno
+    if (!reduceMotion) {
+      const formas = $$(".mapa__barrio", mapa); let k = 0;
+      const io = new IntersectionObserver((en) => {
+        if (!en[0].isIntersecting || tour || tocado) return;
+        tour = setInterval(() => {
+          formas.forEach((f, i) => f.classList.toggle("brilla", i === k % formas.length)); k++;
+        }, 1100);
+        io.disconnect();
+      }, { threshold: 0.2 });
+      io.observe(mapa);
+    }
   }
 
   /* ---------- 7. Taller ---------- */
@@ -523,6 +567,11 @@
   }
 
   /* ---------- Lightbox ---------- */
+  function initVisor() {
+    const dlg = $("#visorCartilla");
+    $("#visorCerrar").addEventListener("click", () => dlg.close());
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+  }
   function initLightbox() {
     const dlg = $("#lightbox"), im = $("#lbImg"), pie = $("#lbPie"), cuenta = $("#lbCuenta");
     let grupo = null, i = 0, origen = null;
@@ -589,5 +638,5 @@
   document.title = S.meta.titulo;
   renderNav(); renderHero(); renderProyecto(); renderHistoria(); renderLetrerista();
   renderEntrevistas(); renderBarrios(); renderTaller(); renderOficio(); renderPie();
-  initLightbox(); initRevela();
+  initLightbox(); initVisor(); initRevela();
 })();

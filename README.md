@@ -26,7 +26,7 @@ js/data.js          contenido editable
 js/app.js           galerías, lightbox, pestañas, mapa, línea de tiempo
 img/                fotos (WebP) y recortes de collage de la cartilla
 video/              clips cortos sin sonido
-descargas/          cartilla y plantillas en PDF
+descargas/          plantillas de práctica en PDF (la cartilla se lee en línea en Heyzine)
 ```
 
 No necesita instalar nada ni compilar. Para verlo en tu computador, ejecuta `python3 -m http.server` en esta carpeta y abre http://localhost:8000.

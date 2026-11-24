@@ -445,29 +445,49 @@ mark.pendiente {
 .b-carreta { width: 260px; right: -30px; top: 30px; opacity: .95; display: none; }
 .b-loro { width: 110px; right: 22%; top: 40px; display: none; }
 @media (min-width: 1100px) { .b-carreta, .b-loro { display: block; } }
-.pestanas { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.5rem 0; }
-.pestana {
-  font-family: var(--f-rotulo); text-transform: uppercase; font-size: clamp(1rem, 2.5vw, 1.35rem); background: var(--c-hueso); color: var(--tinta);
-  border: 3px solid #111; border-radius: 8px 8px 0 0; padding: .55rem 1.2rem; box-shadow: 4px 4px 0 #111; min-height: 48px;
-}
-.pestana[aria-selected="true"] { background: var(--fondo); color: #fff; transform: translateY(-4px) rotate(-1.5deg); }
-.pestana[aria-selected="true"][style*="hoja"] { background: #3f5a14; }
-.barrios__grid { display: grid; gap: 2rem; }
-@media (min-width: 1000px) { .barrios__grid { grid-template-columns: 330px 1fr; align-items: start; } .mapa { position: sticky; top: 90px; } }
-.mapa { background: var(--c-hueso); border: 4px solid #111; border-radius: 10px; padding: .8rem; box-shadow: 7px 7px 0 #111; color: var(--tinta); transform: rotate(-1deg); }
-.mapa__svg { width: 100%; }
-.mapa__barrio { stroke: #111; stroke-width: .8; opacity: .55; cursor: pointer; transition: opacity .3s; }
+.barrios__grid { display: grid; gap: 2rem; margin-top: 1.8rem; }
+@media (min-width: 1000px) { .barrios__grid { grid-template-columns: 380px 1fr; align-items: start; } .mapa { position: sticky; top: 90px; } }
+.mapa { position: relative; background: var(--c-hueso); border: 4px solid #111; border-radius: 12px; padding: .8rem; box-shadow: 7px 7px 0 #111; color: var(--tinta); transform: rotate(-1deg); }
+@media (max-width: 999px) { .mapa { max-width: 460px; width: 100%; margin-inline: auto; } }
+.mapa__svg { width: 100%; overflow: visible; }
+.mapa__barrio { stroke: #111; stroke-width: .8; opacity: .5; cursor: pointer; transition: opacity .35s, transform .35s; transform-box: fill-box; transform-origin: center; }
+.mapa__barrio:hover, .mapa__barrio.brilla { opacity: .85; transform: scale(1.04); }
 .mapa__barrio.activo { opacity: 1; }
+.mapa__ruta { fill: none; stroke: var(--c-petroleo); stroke-width: .9; stroke-dasharray: 2.2 2; stroke-linecap: round; animation: ruta 1.6s linear infinite; pointer-events: none; }
+@keyframes ruta { to { stroke-dashoffset: -8.4; } }
 .mapa__punto { cursor: pointer; outline: none; }
-.mapa__punto circle { transition: r .25s; }
-.mapa__punto.activo circle, .mapa__punto:hover circle, .mapa__punto:focus-visible circle { r: 6; }
-.mapa__punto:focus-visible circle { stroke: #111; stroke-width: 2.2; }
-.mapa__nombre { font: 400 5.4px var(--f-rotulo); text-transform: uppercase; fill: #111; paint-order: stroke; stroke: #fff; stroke-width: 1.4px; }
+.mapa__pin { fill: var(--c-mango); stroke: var(--c-petroleo); stroke-width: 1.2; transition: r .25s; }
+.mapa__punto.activo .mapa__pin { fill: #fff; stroke-width: 1.6; }
+.mapa__punto:hover .mapa__pin, .mapa__punto:focus-visible .mapa__pin, .mapa__punto.activo .mapa__pin { r: 6; }
+.mapa__punto:focus-visible .mapa__pin { stroke: #111; stroke-width: 2.4; }
+.mapa__onda { fill: none; stroke: var(--c-mango); stroke-width: 1.6; transform-box: fill-box; transform-origin: center; animation: onda 2s ease-out infinite; pointer-events: none; }
+.mapa__onda--2 { animation-delay: 1s; }
+@keyframes onda { from { transform: scale(1); opacity: .95; } to { transform: scale(3.2); opacity: 0; } }
+.mapa__nombre { font: 400 5.4px var(--f-rotulo); text-transform: uppercase; fill: #111; paint-order: stroke; stroke: #fff; stroke-width: 1.4px; pointer-events: none; }
+.mapa__punto.activo .mapa__nombre { fill: var(--c-vivo); }
 .mapa__rio { font: 400 4px var(--f-acento); fill: #062e30; }
+.mapa__olas { animation: olas 6s linear infinite; }
+@keyframes olas { to { transform: translateY(4px); } }
+.mapa__pista {
+  position: absolute; left: 50%; top: -1.1rem; translate: -50% 0; margin: 0; white-space: nowrap; z-index: 3;
+  background: var(--c-vivo); color: #fff; font-family: var(--f-rotulo); text-transform: uppercase; font-size: 1.05rem;
+  padding: .35rem .9rem; border: 3px solid #111; border-radius: 999px; box-shadow: 3px 3px 0 #111; animation: salta 1.4s ease-in-out infinite; transition: opacity .4s;
+}
+.mapa__mano { display: inline-block; animation: toca 1.4s ease-in-out infinite; }
+@keyframes salta { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-6px) rotate(2deg); } }
+@keyframes toca { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+.mapa--usado .mapa__pista { opacity: 0; pointer-events: none; }
+.mapa--usado .mapa__onda { animation-iteration-count: 1; opacity: 0; }
+.mapa--usado .mapa__punto.activo .mapa__onda { animation: onda 2s ease-out infinite; }
 .mapa__nota { font-size: .8rem; margin: .4rem 0 0; text-align: center; }
 .barrio-panel { outline: none; }
 .barrio-panel__cab { margin-bottom: 1.6rem; }
-.barrio-panel__cab p { margin: 1rem 0 0; max-width: 60ch; color: #fff; }
+.barrio-panel__cab p { margin: 1rem 0 0; max-width: 60ch; color: #fff; font-size: 1.08rem; }
+.barrio-sig {
+  margin-top: 1rem; font-family: var(--f-rotulo); text-transform: uppercase; font-size: 1rem; background: transparent; color: #fff;
+  border: 0; border-bottom: 3px solid var(--c-mango); padding: .2rem 0; min-height: 44px;
+}
+.barrio-sig:hover span { display: inline-block; transform: translateX(4px); }
 .barrios .marco-amarillo figcaption small { color: #fff; }
 
 /* ---------- 7. TALLER ---------- */
@@ -608,6 +628,16 @@ mark.pendiente {
 .lb-prev { left: .6rem; top: 50%; } .lb-next { right: .6rem; top: 50%; }
 .lb-cuenta { position: absolute; top: 1.2rem; left: 1rem; color: #fff; font-family: var(--f-rotulo); margin: 0; }
 @media (max-width: 640px) { .lb-prev, .lb-next { top: auto; bottom: 1rem; } .lightbox__marco { padding-bottom: 5rem; } }
+
+/* ---------- visor de la cartilla ---------- */
+.visor { padding: 0; border: 4px solid #111; border-radius: 12px; width: min(1200px, 96vw); height: min(860px, 92vh); max-width: none; max-height: none; background: var(--c-petroleo); box-shadow: 10px 10px 0 var(--c-mango); overflow: hidden; }
+.visor::backdrop { background: rgba(6, 34, 36, .9); }
+.visor[open] { display: flex; flex-direction: column; }
+.visor__cab { display: flex; align-items: center; justify-content: space-between; padding: .5rem .7rem .5rem 1.1rem; background: var(--c-vivo); border-bottom: 4px solid #111; }
+.visor__titulo { margin: 0; font-family: var(--f-rotulo); text-transform: uppercase; color: #fff; font-size: 1.2rem; }
+.visor__cerrar { position: static; width: 44px; height: 44px; font-size: 1.2rem; background: #fff; }
+.visor__marco { flex: 1; background: #1b1b1b; }
+.visor__marco iframe { width: 100%; height: 100%; border: 0; display: block; }
 
 /* ---------- movimiento reducido ---------- */
 @media (prefers-reduced-motion: reduce) {

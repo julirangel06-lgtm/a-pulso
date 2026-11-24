@@ -64,12 +64,13 @@ window.SITE = {
     ],
     cartilla: {
       portada: foto("img/portada-cartilla", 900, 1350, { alt: "Portada de la cartilla A PULSO: el título en letra rotulada sobre una pared blanca con una hoja de palma" }),
-      pdf: "descargas/a-pulso-cartilla.pdf",
-      detalle: "PDF · 83 páginas · 14,9 MB",
-      /* La descarga se habilita sola en esta fecha (hora de Colombia, UTC-5).
+      /* Flipbook para leer en línea (no se descarga) */
+      flipbook: "https://heyzine.com/flip-book/86956347db.html#page/1",
+      detalle: "83 páginas · Lectura en línea",
+      /* El botón para leer se habilita solo en esta fecha (hora de Colombia, UTC-5).
          Deja "" para que esté disponible desde ya. */
       disponibleDesde: "2026-12-04T00:00:00-05:00",
-      textoEspera: "La cartilla se podrá descargar el 4 de diciembre de 2026",
+      textoEspera: "La cartilla se podrá leer en línea el 4 de diciembre de 2026",
     },
     creditos: {
       institucion: "Institución Universitaria de Barranquilla",
@@ -142,8 +143,9 @@ window.SITE = {
     rol: "Artista plástico",
     foto: foto("img/collage/yeison", 635, 895, { alt: "Retrato en blanco y negro de Yeison Romero, de frente, con camiseta oscura" }),
     bio: [
-      "Tiene 28 años y más de quince con el pincel en la mano. Aprendió de su familia y de maestros del barrio, y hoy es un referente del arte picotero: su firma está en picós como El Timbalero, El Gran Fredy y El Sibanicú.",
-      "También ha llenado de color murales en Rebolo, Las Nieves, Carrizal y el Gran Malecón. Su secreto: boceto a lápiz, cuadrícula y mucha práctica.",
+      "Yeison tiene 28 años y lleva más de quince con un pincel en la mano. Todo empezó en la infancia, entre dibujos, caricaturas y calcomanías, y creció de la mano de su familia y de maestros como Dairo Barrionuevo, José Llanos, Néstor Loaiza y Wilberto Echeverría. Con ellos entendió que este es un oficio vivo: se hereda, y se aprende haciendo.",
+      "Hoy es un referente del arte picotero. Su firma brilla en picós y turbos como El Timbalero, El Gran Fredy y El Sibanicú, y sus murales le ponen color a Rebolo, Las Nieves, la Ciudadela 20 de Julio, Carrizal y el Gran Malecón.",
+      "Su método mezcla lo de siempre con lo de ahora: cada obra nace como un boceto a lápiz, pasa por el computador y termina en gran formato. La cuadrícula le da la perspectiva; el círculo cromático, todo el sabor.",
     ],
     cita: {
       texto: "Antes de coger un pincel, debes observar.",
@@ -219,12 +221,12 @@ window.SITE = {
      mapa: posición del punto en el mapa ilustrado (0 a 100). */
   barrios: {
     titulo: "Recorrido por barrios",
-    intro: "Escoge un barrio y date una vuelta por sus letreros.",
+    intro: "Tres barrios del Centro Histórico y un montón de letreros por descubrir. Toca uno en el mapa y sal a caminar con nosotros.",
     nota: "Mapa ilustrado, no está a escala.",
     lista: [
       {
         id: "barrio-abajo", nombre: "Barrio Abajo", color: "vivo",
-        descripcion: "Murales, casetas y esquinas pintadas de arriba abajo.",
+        descripcion: "Aquí las esquinas se pintan de arriba abajo: murales, casetas y letreros que te dicen, sin preguntar, en qué barrio estás.",
         mapa: { x: 24, y: 34 },
         fotos: [
           foto("img/barrio-abajo/barrio-abajo-02", 1200, 1600, { titulo: "Restaurante La Negra del Sabor", alt: "Letrero de caballete con las palabras Restaurante La Negra del Sabor frente a una fachada amarilla", fecha: "25 de octubre de 2026", autor: EQUIPO_FOTO }),
@@ -238,7 +240,7 @@ window.SITE = {
       },
       {
         id: "el-centro", nombre: "El Centro", color: "petroleo",
-        descripcion: "Maderas, colchones y puertas, con la lista de productos pintada en la fachada.",
+        descripcion: "El corazón del comercio: maderas, colchones y puertas, con la lista de productos pintada en la fachada para que nadie se pierda.",
         mapa: { x: 60, y: 44 },
         fotos: [
           foto("img/el-centro/el-centro-01", 896, 1195, { titulo: "Hilera de fachadas", alt: "Calle con fachadas amarilla, roja y azul y letreros pintados, entre ellos Maderas Ríos Mar", autor: EQUIPO_FOTO }),
@@ -252,7 +254,7 @@ window.SITE = {
       },
       {
         id: "san-roque", nombre: "San Roque", color: "hoja",
-        descripcion: "Restaurantes, tiendas y misceláneas con letras de todos los estilos.",
+        descripcion: "Restaurantes, tiendas y misceláneas donde cada letrero tiene su propia letra: cursiva, bloque y todo lo que hay en el medio.",
         mapa: { x: 48, y: 74 },
         fotos: [
           foto("img/san-roque/san-roque-03", 1200, 1600, { titulo: "Restaurante La Vieja Elvira", alt: "Letrero de pie con las palabras Restaurante La Vieja Elvira y un plato pintado", fecha: "25 de octubre de 2026", autor: EQUIPO_FOTO }),
