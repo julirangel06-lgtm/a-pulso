@@ -31,6 +31,7 @@ body {
   color: var(--tinta); background: var(--c-hueso); overflow-x: clip;
 }
 img, video, svg { max-width: 100%; height: auto; display: block; }
+img { user-select: none; -webkit-user-select: none; -webkit-user-drag: none; -webkit-touch-callout: none; }
 a { color: inherit; }
 p { margin: 0 0 1em; }
 h1, h2, h3, h4 { line-height: 1.1; margin: 0; }

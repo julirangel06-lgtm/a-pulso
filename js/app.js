@@ -16,9 +16,9 @@
   function img(f, { sizes = "(min-width: 900px) 33vw, 100vw", cls = "", eager = false, decor = false } = {}) {
     if (!f) return "";
     const alt = decor ? "" : esc(f.alt || "");
-    return `<img class="${cls}" src="${f.src}-sm.webp" srcset="${f.src}-sm.webp ${Math.min(720, f.w)}w, ${f.src}.webp ${f.w}w" sizes="${sizes}" width="${f.w}" height="${f.h}" alt="${alt}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${decor ? ' aria-hidden="true"' : ""}>`;
+    return `<img draggable="false" class="${cls}" src="${f.src}-sm.webp" srcset="${f.src}-sm.webp ${Math.min(720, f.w)}w, ${f.src}.webp ${f.w}w" sizes="${sizes}" width="${f.w}" height="${f.h}" alt="${alt}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${decor ? ' aria-hidden="true"' : ""}>`;
   }
-  const deco = (name, cls, w, h) => `<img class="deco ${cls}" src="img/collage/${name}.webp" width="${w}" height="${h}" alt="" aria-hidden="true" loading="lazy" decoding="async">`;
+  const deco = (name, cls, w, h) => `<img draggable="false" class="deco ${cls}" src="img/collage/${name}.webp" width="${w}" height="${h}" alt="" aria-hidden="true" loading="lazy" decoding="async">`;
   const ast = (cls = "") => `<span class="ast ${cls}" aria-hidden="true">✱</span>`;
   const destello = (cls = "") => `<svg class="destello ${cls}" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 0c1.5 11 5 16.5 20 20-15 3.5-18.5 9-20 20-1.5-11-5-16.5-20-20C15 16.5 18.5 11 20 0z"/></svg>`;
 
@@ -72,7 +72,7 @@
     const h = S.hero;
     $("#inicio").innerHTML = `
       <div class="hero__collage" aria-hidden="true">
-        <img class="deco h-palma" src="img/collage/palma.webp" width="726" height="624" alt="">
+        <img draggable="false" class="deco h-palma" src="img/collage/palma.webp" width="726" height="624" alt="">
         ${deco("nube-esponjosa", "h-nube1 flota", 800, 329)}
         ${deco("nube-esponjosa", "h-nube2 flota-lento", 800, 329)}
         ${deco("negra-sabor", "h-negra inclina", 334, 354)}
@@ -94,7 +94,7 @@
         <div class="hero__cinta-pista">${[0, 1].map(() => [
           ["hoy-no-fio-manana-si", 700, 700], ["negra-sabor", 334, 354], ["asado-cartel", 810, 900],
           ["donde-rafa", 355, 532], ["super-combo", 415, 421], ["hoy-no-fio", 0, 0],
-        ].filter((x) => x[1]).map(([n, w, h2]) => `<img src="img/collage/${n}.webp" width="${w}" height="${h2}" alt="" loading="lazy" decoding="async"><span class="ast">✱</span>`).join("")).join("")}</div>
+        ].filter((x) => x[1]).map(([n, w, h2]) => `<img draggable="false" src="img/collage/${n}.webp" width="${w}" height="${h2}" alt="" loading="lazy" decoding="async"><span class="ast">✱</span>`).join("")).join("")}</div>
       </div>
       <div class="borde borde--abajo" style="--borde:var(--c-rojo)"></div>`;
   }
@@ -263,7 +263,7 @@
         </div>
         <div class="letrerista__texto">
           <h2 id="letrerista-titulo" class="titulo-img revela">
-            <img src="img/titulos/yeison-titulo-v2.webp" width="1000" height="631" alt="">
+            <img draggable="false" src="img/titulos/yeison-titulo-v2.webp" width="1000" height="631" alt="">
             <span class="sr">${esc(L.nombre)}, ${esc(L.rol)}</span>
           </h2>
           ${L.bio.map((x) => `<p>${t(x)}</p>`).join("")}
@@ -554,14 +554,14 @@
       ${deco("mano-lapiz", "o-mano", 900, 319)}
       <div class="contenedor">
         <h2 id="oficio-titulo" class="titulo-img titulo-img--centro revela">
-          <img src="img/titulos/ocho-pasos-v2.webp" width="1000" height="453" alt="">
+          <img draggable="false" src="img/titulos/ocho-pasos-v2.webp" width="1000" height="453" alt="">
           <span class="sr">${esc(O.titulo)}</span>
         </h2>
         <p class="intro intro--centro">${t(O.intro)}</p>
         <div class="letra-viva revela" id="letraViva">
           <div class="escenario" id="escenario">
             <div class="escenario__letra" aria-hidden="true">
-              ${O.pasos.map((p, i) => `<img src="img/pasos/h${i + 1}.webp" alt="" data-i="${i}" ${i ? 'loading="lazy"' : ""} decoding="async">`).join("")}
+              ${O.pasos.map((p, i) => `<img draggable="false" src="img/pasos/h${i + 1}.webp" alt="" data-i="${i}" ${i ? 'loading="lazy"' : ""} decoding="async">`).join("")}
               ${ast("escenario__ast gira")}
             </div>
             <div class="escenario__info" aria-live="polite">
@@ -578,7 +578,7 @@
           </div>
           <ol class="pasos-tira" aria-label="Los 8 pasos">
             ${O.pasos.map((p, i) => `<li><button type="button" class="pasos-tira__btn" data-i="${i}" aria-pressed="${i === 0}">
-              <img src="img/pasos/h${i + 1}-sm.webp" alt="" loading="lazy" decoding="async"><span><b>${i + 1}</b> ${t(p.titulo)}</span>
+              <img draggable="false" src="img/pasos/h${i + 1}-sm.webp" alt="" loading="lazy" decoding="async"><span><b>${i + 1}</b> ${t(p.titulo)}</span>
             </button></li>`).join("")}
           </ol>
         </div>
@@ -637,10 +637,10 @@
       <div class="banderines" aria-hidden="true">${banderines}</div>
       <div class="contenedor pie__grid">
         <div class="pie__marca">
-          <img src="img/logo-a-pulso-xs.webp" width="216" height="240" alt="A PULSO" loading="lazy">
+          <img draggable="false" src="img/logo-a-pulso-xs.webp" width="216" height="240" alt="A PULSO" loading="lazy">
           <p class="pie__lema">${esc(F.lema)}</p>
           <figure class="qr">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&data=${encodeURIComponent(qrUrl)}" width="160" height="160" alt="Código QR con el enlace a este sitio" loading="lazy">
+            <img draggable="false" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&data=${encodeURIComponent(qrUrl)}" width="160" height="160" alt="Código QR con el enlace a este sitio" loading="lazy">
             <figcaption>${esc(F.qr.texto)}</figcaption>
           </figure>
         </div>
