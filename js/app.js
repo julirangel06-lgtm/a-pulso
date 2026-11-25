@@ -552,7 +552,7 @@
       ${deco("mano-lapiz", "o-mano", 900, 319)}
       <div class="contenedor">
         <h2 id="oficio-titulo" class="titulo-img titulo-img--centro revela">
-          <img src="img/titulos/ocho-pasos.webp" width="377" height="173" alt="">
+          <img src="img/titulos/ocho-pasos-v2.webp" width="1000" height="453" alt="">
           <span class="sr">${esc(O.titulo)}</span>
         </h2>
         <p class="intro intro--centro">${t(O.intro)}</p>

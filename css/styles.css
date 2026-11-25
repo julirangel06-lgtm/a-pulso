@@ -92,6 +92,7 @@ mark.pendiente {
 .titulo-img { margin: 0 0 1.2rem; }
 .titulo-img img { width: min(440px, 90%); filter: drop-shadow(4px 4px 0 rgba(11, 83, 86, .35)); }
 .titulo-img--centro img { margin-inline: auto; }
+#oficio-titulo img { width: min(560px, 92%); }
 .intro { font-size: clamp(1.05rem, 2vw, 1.2rem); max-width: 60ch; }
 .intro--claro { color: #fff; }
 .intro--centro { margin-inline: auto; text-align: center; }
