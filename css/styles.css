@@ -589,6 +589,10 @@ mark.pendiente {
 .globo::after { content: ""; position: absolute; left: 32px; bottom: -22px; width: 28px; height: 24px; background: var(--fondo); border: 3px solid #111; border-top: 0; border-right: 0; clip-path: polygon(0 0, 100% 0, 0 100%); }
 .globo p { font-weight: 500; font-size: 1.05rem; }
 .globo span { font-family: var(--f-acento); }
+.globo--dato { text-align: center; padding-top: 1rem; }
+.globo__cifra { display: block; font-family: var(--f-rotulo); font-weight: 400; font-size: clamp(2.6rem, 6vw, 3.4rem); line-height: 1; color: #fff; -webkit-text-stroke: 6px #111; paint-order: stroke fill; text-shadow: 4px 4px 0 #111; margin-bottom: .4rem; }
+.globo--dato p { margin: 0; }
+.fuente-datos { font-size: .82rem; opacity: .9; margin-top: 1.2rem; max-width: 80ch; }
 .graficas { display: grid; gap: 1.5rem; }
 @media (min-width: 900px) { .graficas { grid-template-columns: 1fr 1fr; } }
 .grafica { margin: 0; background: var(--c-hueso); color: var(--tinta); border: 3px solid #111; border-radius: 10px; padding: 1.1rem 1.2rem 1rem; box-shadow: 6px 6px 0 #111; }

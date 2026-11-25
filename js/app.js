@@ -515,8 +515,8 @@
         <p class="intro intro--claro">${t(T.intro)}</p>
         <ol class="proceso">${T.proceso.map((p, i) => `<li class="revela"><span class="num-circulo">${i + 1}</span><strong>${t(p.titulo)}</strong><span>${t(p.texto)}</span></li>`).join("")}</ol>
 
-        <h3 class="subrotulo">Antes y después</h3>
-        <div class="comparaciones">${T.comparaciones.map(comparacion).join("")}</div>
+        ${T.comparaciones && T.comparaciones.length ? `<h3 class="subrotulo">Antes y después</h3>
+        <div class="comparaciones">${T.comparaciones.map(comparacion).join("")}</div>` : ""}
 
         <h3 class="subrotulo">Así fue el taller</h3>
         <div class="taller__media">
@@ -524,11 +524,14 @@
           <div class="videos">${T.videos.map((v) => `<video class="video-loop${v.vertical ? " video-loop--v" : ""}" src="${v.src}" poster="${v.poster}" muted loop playsinline preload="none" controls aria-label="${esc(v.alt)}"></video>`).join("")}</div>
         </div>
 
-        <h3 class="subrotulo">Lo que dijeron</h3>
-        <ul class="globos">${T.testimonios.map((g, i) => `<li class="globo revela" style="--fondo:${col(g.color)}; --giro:${[-2, 1, -1][i % 3]}deg"><p>${t(g.texto)}</p><span>— ${t(g.autor)}</span></li>`).join("")}</ul>
+        <h3 class="subrotulo">${esc(T.titDatos || "Lo que dijeron")}</h3>
+        <ul class="globos">${T.testimonios.map((g, i) => `<li class="globo revela${g.cifra ? " globo--dato" : ""}" style="--fondo:${col(g.color)}; --giro:${[-2, 1, -1][i % 3]}deg">
+          ${g.cifra ? `<strong class="globo__cifra">${esc(g.cifra)}</strong><p>${t(g.texto)}</p>` : `<p>${t(g.texto)}</p><span>— ${t(g.autor)}</span>`}
+        </li>`).join("")}</ul>
 
-        <h3 class="subrotulo">Resultados de la evaluación</h3>
+        <h3 class="subrotulo">${esc(T.titResultados || "Resultados")}</h3>
         <div class="graficas">${T.resultados.map(grafica).join("")}</div>
+        ${T.fuenteDatos ? `<p class="fuente-datos">${t(T.fuenteDatos)}</p>` : ""}
       </div>
       <div class="borde borde--abajo" style="--borde:var(--c-hueso)"></div>`;
 

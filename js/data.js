@@ -278,17 +278,16 @@ window.SITE = {
   /* ---------------- 7. TALLER CON ESTUDIANTES ---------------- */
   taller: {
     titulo: "Taller con estudiantes",
-    intro: "Pusimos a prueba la cartilla con estudiantes de la IUB en noviembre de 2026. Así les fue.",
+    intro: "Antes de diseñar la cartilla le preguntamos a 25 estudiantes de la IUB qué sabían del oficio y qué querían aprender. Con sus respuestas armamos la cartilla y en noviembre la pusimos a prueba en un taller.",
     proceso: [
+      { titulo: "Encuesta", texto: "25 estudiantes nos contaron qué saben y qué quieren aprender." },
       { titulo: "Trazos básicos", texto: "Rectas, curvas y arcos." },
       { titulo: "Abecedario bloque", texto: "Letra por letra, sobre plantilla." },
       { titulo: "Letra con efectos", texto: "Volumen, degradado y sombra." },
-      { titulo: "Evaluación", texto: "[PENDIENTE: describir cómo se evaluó la cartilla.]" },
     ],
-    /* Comparaciones antes/después: deja antes/despues en null para ver el espacio de espera */
-    comparaciones: [
-      { titulo: "[PENDIENTE: ejercicio 1]", antes: null, despues: null, pie: "[PENDIENTE: nombre del estudiante o anónimo, fecha]" },
-    ],
+    /* Comparaciones antes/después: agrega fotos con foto(...) en antes y despues.
+       Si la lista queda vacía, la sección no se muestra. */
+    comparaciones: [],
     galeria: [
       foto("img/taller/taller-03", 1200, 1600, { alt: "Estudiante rellena con resaltador el abecedario con efectos", autor: EQUIPO_FOTO, fecha: "18 de noviembre de 2026" }),
       foto("img/taller/taller-06", 1600, 1200, { alt: "Tres estudiantes practican sobre las plantillas en una mesa", autor: EQUIPO_FOTO, fecha: "18 de noviembre de 2026" }),
@@ -303,23 +302,40 @@ window.SITE = {
       { src: "video/taller-clip-3.mp4", poster: "video/taller-clip-3.webp", alt: "Tres estudiantes practican en la mesa de trabajo", vertical: false },
       { src: "video/taller-clip-4.mp4", poster: "video/taller-clip-4.webp", alt: "Estudiante con resaltador sobre el abecedario con efectos", vertical: true },
     ],
+    /* Datos de la encuesta a estudiantes de la IUB (24–28 sep 2026), n = 25 respuestas
+       con correo institucional. Archivo de respaldo: Encuesta a estudiantes.xlsx */
+    fuenteDatos: "Fuente: encuesta a 25 estudiantes de la Institución Universitaria de Barranquilla, del 24 al 28 de septiembre de 2026. En las preguntas de varias respuestas los porcentajes suman más de 100 %.",
+    titDatos: "Lo que nos dijeron",
     testimonios: [
-      { texto: "[PENDIENTE: testimonio corto de un estudiante]", autor: "[PENDIENTE: nombre o “Estudiante de Diseño Gráfico”]", color: "mango" },
-      { texto: "[PENDIENTE: testimonio corto de un estudiante]", autor: "[PENDIENTE]", color: "turquesa" },
-      { texto: "[PENDIENTE: testimonio corto de un estudiante]", autor: "[PENDIENTE]", color: "rosado" },
+      { cifra: "96 %", texto: "cree que los letreristas hacen parte de la identidad visual y cultural de Barranquilla.", color: "mango" },
+      { cifra: "84 %", texto: "dice que las nuevas generaciones no conocen lo suficiente el trabajo de los letreristas.", color: "turquesa" },
+      { cifra: "96 %", texto: "quiere conocer a las personas detrás de los letreros del Centro.", color: "rosado" },
+      { cifra: "100 %", texto: "encuentra interesante un libro que combine la historia del oficio con ejercicios prácticos.", color: "mango" },
+      { cifra: "96 %", texto: "usaría los ejercicios de un libro para pintar sus propias letras.", color: "turquesa" },
+      { cifra: "92 %", texto: "cree que un proyecto editorial como este ayudaría a que el oficio no se pierda.", color: "rosado" },
     ],
-    /* Resultados: cambia valor: null por el número real (0 a 100 si es %).
-       Mientras sea null la barra se muestra punteada con [PENDIENTE]. */
+    titResultados: "La encuesta en cifras",
     resultados: [
-      { pregunta: "[PENDIENTE: pregunta 1 de la evaluación]", unidad: "%", datos: [
-        { etiqueta: "[PENDIENTE]", valor: null, color: "vivo" },
-        { etiqueta: "[PENDIENTE]", valor: null, color: "mango" },
-        { etiqueta: "[PENDIENTE]", valor: null, color: "hoja" },
+      { pregunta: "¿Qué letreros ves con más frecuencia en los negocios?", unidad: "%", datos: [
+        { etiqueta: "Impresos", valor: 60, color: "petroleo" },
+        { etiqueta: "Pantallas digitales", valor: 28, color: "turquesa" },
+        { etiqueta: "Pintados a mano", valor: 12, color: "vivo" },
       ] },
-      { pregunta: "[PENDIENTE: pregunta 2 de la evaluación]", unidad: "%", datos: [
-        { etiqueta: "[PENDIENTE]", valor: null, color: "turquesa" },
-        { etiqueta: "[PENDIENTE]", valor: null, color: "letrero" },
-        { etiqueta: "[PENDIENTE]", valor: null, color: "petroleo" },
+      { pregunta: "¿El oficio de pintar letreros a mano está desapareciendo?", unidad: "%", datos: [
+        { etiqueta: "Sí", valor: 88, color: "vivo" },
+        { etiqueta: "No", valor: 8, color: "hoja" },
+        { etiqueta: "No lo sé", valor: 4, color: "turquesa" },
+      ] },
+      { pregunta: "¿Qué te da más curiosidad del oficio? (varias respuestas)", unidad: "%", datos: [
+        { etiqueta: "Técnicas de pintura y rotulación", valor: 84, color: "mango" },
+        { etiqueta: "Cómo ha cambiado con el tiempo", valor: 68, color: "turquesa" },
+        { etiqueta: "Cómo aprendieron el oficio", valor: 64, color: "letrero" },
+        { etiqueta: "Herramientas y materiales", valor: 56, color: "hoja" },
+      ] },
+      { pregunta: "¿Te gustaría aprender a pintar letreros con un libro paso a paso?", unidad: "%", datos: [
+        { etiqueta: "Sí, mucho", valor: 56, color: "vivo" },
+        { etiqueta: "Sí, un poco", valor: 36, color: "mango" },
+        { etiqueta: "Me es indiferente", valor: 8, color: "turquesa" },
       ] },
     ],
   },
