@@ -86,7 +86,7 @@
         ${deco("hoy-no-fio-manana-si", "h-fio inclina", 700, 700)}
         ${deco("asado-cartel", "h-asado inclina", 810, 900)}
         ${deco("latas", "h-latas", 366, 320)}
-        ${deco("pinceles-frasco", "h-pinceles", 170, 422)}
+        ${deco("pinceles-manojo", "h-pinceles inclina", 900, 606)}
         ${deco("loro-2", "h-loro flota", 362, 384)}
         ${ast("h-ast1 gira")}${ast("h-ast2 gira")}${destello("h-dest1 titila")}${destello("h-dest2 titila")}
       </div>
@@ -277,7 +277,7 @@
         <div class="letrerista__foto revela">
           <span class="circulo" aria-hidden="true"></span>
           ${img(L.foto, { sizes: "(min-width: 900px) 420px, 80vw" })}
-          ${deco("pinceles-frasco", "l-pinceles", 170, 422)}
+          ${deco("pinceles-manojo", "l-pinceles", 900, 606)}
           ${deco("latas", "l-latas", 366, 320)}
           ${ast("l-ast gira")}
         </div>

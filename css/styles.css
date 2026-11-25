@@ -223,10 +223,11 @@ mark.pendiente {
   .h-rafa { width: 170px; }
   .h-fio { display: block; width: 190px; left: 5%; right: auto; top: 44%; rotate: 6deg; filter: drop-shadow(5px 5px 0 rgba(11, 83, 86, .45)); }
   .h-asado { display: block; width: 200px; right: 3%; top: 36%; rotate: -4deg; filter: drop-shadow(4px 4px 0 rgba(11, 83, 86, .3)); }
-  .h-pinceles { display: block; width: 90px; right: 20%; bottom: 0; }
+  .h-pinceles { display: none; width: 190px; right: 19%; bottom: 7%; rotate: -7deg; filter: drop-shadow(4px 4px 0 rgba(11, 83, 86, .3)); }
   .h-loro { display: block; width: 150px; left: 14%; top: 14%; }
   .h-latas { width: 170px; left: 24%; }
 }
+@media (min-width: 1200px) { .h-pinceles { display: block; } }
 /* cinta de letreros en movimiento (solo celular) */
 .hero__cinta { display: none; }
 @media (max-width: 759px) {
@@ -365,7 +366,7 @@ mark.pendiente {
 .letrerista__foto { position: relative; max-width: 440px; margin-inline: auto; padding: 1rem 1rem 0; }
 .letrerista__foto .circulo { position: absolute; inset: 10% 0 0 6%; border-radius: 50%; background: var(--c-turquesa); border: 4px solid var(--c-petroleo); }
 .letrerista__foto > img:first-of-type { position: relative; z-index: 2; filter: drop-shadow(8px 8px 0 var(--c-petroleo)); }
-.l-pinceles { width: 92px; left: -10px; bottom: 0; z-index: 3 !important; rotate: -8deg; }
+.l-pinceles { width: 160px; left: -34px; bottom: 6px; z-index: 3 !important; rotate: -12deg; filter: drop-shadow(3px 3px 0 rgba(11, 83, 86, .35)); }
 .l-latas { width: 130px; right: -14px; bottom: -8px; z-index: 3 !important; }
 .l-ast { position: absolute; font-size: 3.5rem; top: 0; right: 10%; z-index: 3; }
 .letrerista__texto p { max-width: 62ch; }
