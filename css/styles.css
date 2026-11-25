@@ -347,7 +347,7 @@ mark.pendiente {
 /* celular: todo debe caber en una pantalla mientras la sección está fija */
 @media (max-width: 759px) {
   .hist .hist__fijo { padding: 70px 0 1rem; gap: .5rem; }
-  .hist .hist__cab .rotulo { font-size: 1.8rem; }
+  .hist .hist__cab .rotulo { font-size: clamp(2.3rem, 10.5vw, 2.8rem); line-height: 1.02; }
   .hist .hist__cab .intro { font-size: .95rem; }
   .hist .hist__pista { padding-inline: 10vw; gap: 1rem; }
   .hist .hito { flex-basis: 80vw; }
