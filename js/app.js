@@ -203,13 +203,12 @@
       </div>
       <div class="borde borde--abajo" style="--borde:var(--c-mango)"></div>`;
 
-    const cont = $("#hist"), pista = $("#histPista"), prog = $("#histProg"), pistaTxt = $("#histPistaTxt");
-    const movil = window.matchMedia("(max-width: 759px)");
-    let dist = 0, pend = false, modo = null;
-    // Escritorio: la sección queda fija y la pista avanza al bajar.
-    // Celular o movimiento reducido: carrusel que se desliza con el dedo.
+    const cont = $("#hist"), fijo = $(".hist__fijo", cont), pista = $("#histPista"), prog = $("#histProg"), pistaTxt = $("#histPistaTxt");
+    let dist = 0, pend = false, modo = null, stickyRoto = false;
+    // La sección queda fija y la pista avanza en horizontal al bajar (celular y escritorio).
+    // Con movimiento reducido, o si el navegador no logra fijar la sección, pasa a carrusel manual.
     const aplicarModo = () => {
-      const libre = reduceMotion || movil.matches;
+      const libre = reduceMotion || stickyRoto;
       if (libre === modo) { if (!libre) medir(); return; }
       modo = libre;
       cont.classList.toggle("hist--libre", libre);
@@ -221,17 +220,22 @@
     const medir = () => {
       pista.style.transform = "";
       dist = Math.max(0, pista.scrollWidth - window.innerWidth);
-      cont.style.height = `${window.innerHeight + dist}px`;
+      // se usa el alto real del bloque fijo (svh), que no cambia cuando el navegador del celular esconde su barra
+      cont.style.height = `${fijo.offsetHeight + dist}px`;
       mover();
     };
     const mover = () => {
       pend = false;
       if (modo) return;
       const r = cont.getBoundingClientRect();
-      const total = cont.offsetHeight - window.innerHeight;
+      const total = cont.offsetHeight - fijo.offsetHeight;
       const p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
       pista.style.transform = `translate3d(${-p * dist}px,0,0)`;
       prog.style.width = `${p * 100}%`;
+      // Respaldo: si estamos en medio del recorrido y el bloque no quedó pegado arriba, el sticky no funciona
+      if (!stickyRoto && r.top < -40 && r.bottom > fijo.offsetHeight + 40 && Math.abs(fijo.getBoundingClientRect().top) > 30) {
+        stickyRoto = true; aplicarModo();
+      }
     };
     const progLibre = () => {
       const max = pista.scrollWidth - pista.clientWidth;
@@ -240,9 +244,8 @@
     pista.addEventListener("scroll", () => { if (modo) progLibre(); }, { passive: true });
     window.addEventListener("scroll", () => { if (!pend && !modo) { pend = true; requestAnimationFrame(mover); } }, { passive: true });
     let ancho = window.innerWidth;
-    // En iPhone la barra del navegador cambia el alto al hacer scroll: solo se recalcula si cambia el ancho
-    window.addEventListener("resize", () => { if (window.innerWidth !== ancho) { ancho = window.innerWidth; modo = null; aplicarModo(); } });
-    window.addEventListener("load", () => { modo = null; aplicarModo(); });
+    window.addEventListener("resize", () => { if (window.innerWidth !== ancho) { ancho = window.innerWidth; if (!modo) medir(); } });
+    window.addEventListener("load", () => { if (!modo) medir(); });
     aplicarModo();
   }
 

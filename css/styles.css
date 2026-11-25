@@ -340,6 +340,17 @@ mark.pendiente {
 .hist--libre .hist__barra { margin-top: .6rem; }
 .hist--libre .hist__barra b { display: none; }
 @media (max-height: 640px) { .hito__cuerpo .hito__fuente { display: none; } .hist__cab .intro { display: none; } }
+/* celular con slide al bajar: todo debe caber en una pantalla */
+@media (max-width: 759px) {
+  .hist:not(.hist--libre) .hist__fijo { padding: 72px 0 1.2rem; gap: .6rem; }
+  .hist:not(.hist--libre) .hist__cab .rotulo { font-size: 1.8rem; }
+  .hist:not(.hist--libre) .hist__cab .intro { font-size: .95rem; }
+  .hist:not(.hist--libre) .hist__pista { padding-inline: 10vw; gap: 1rem; }
+  .hist:not(.hist--libre) .hito { flex-basis: 80vw; }
+  .hist:not(.hist--libre) .hito__img { height: clamp(90px, 17svh, 150px); }
+  .hist:not(.hist--libre) .hito__fuente { display: none; }
+  .hist:not(.hist--libre) .hist__barra { margin-top: .4rem; }
+}
 
 /* ---------- 4. LETRERISTA ---------- */
 .letrerista { background: var(--c-mango); color: var(--tinta); }
