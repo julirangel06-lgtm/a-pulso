@@ -24,9 +24,9 @@ index.html          estructura de la página
 css/styles.css      estilos (paleta, marcos, bordes, animaciones)
 js/data.js          contenido editable
 js/app.js           galerías, lightbox, pestañas, mapa, línea de tiempo
-img/                fotos (WebP) y recortes de collage de la cartilla
+img/                fotos (WebP) y recortes de collage del libro
 video/              clips cortos sin sonido
-descargas/          plantillas de práctica en PDF (la cartilla se lee en línea en Heyzine)
+descargas/          plantillas de práctica en PDF (el libro se lee en línea en Heyzine)
 ```
 
 No necesita instalar nada ni compilar. Para verlo en tu computador, ejecuta `python3 -m http.server` en esta carpeta y abre http://localhost:8000.

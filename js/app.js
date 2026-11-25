@@ -115,7 +115,7 @@
         <div class="proyecto__texto">
           <h2 id="proyecto-titulo" class="rotulo rotulo--claro revela"><span class="rotulo__chico">${esc(p.antetitulo)}</span> ${esc(p.titulo)}</h2>
           ${p.parrafos.map((x) => `<p>${t(x)}</p>`).join("")}
-          <h3 class="subrotulo">¿Qué contiene la cartilla?</h3>
+          <h3 class="subrotulo">¿Qué contiene el libro?</h3>
           <ol class="contenido-lista">${p.contenido.map((c, i) => `
             <li class="etiqueta-dentada revela" style="--fondo:${col(coloresContenido[i % 5])}">
               <span class="etiqueta-dentada__num">${esc(c.num)}</span>
@@ -123,7 +123,7 @@
             </li>`).join("")}
           </ol>
         </div>
-        <aside class="cartilla" aria-label="La cartilla">
+        <aside class="cartilla" aria-label="El libro">
           <div class="estampilla-sombra revela"><div class="estampilla">${img(p.cartilla.portada, { sizes: "(min-width: 900px) 360px, 80vw" })}</div></div>
           <div id="descargaCartilla" class="cartilla__descarga"></div>
           <p class="cartilla__detalle">${esc(p.cartilla.detalle)}</p>
@@ -141,7 +141,7 @@
   function initCuentaRegresiva(c) {
     const caja = $("#descargaCartilla");
     const meta = c.disponibleDesde ? new Date(c.disponibleDesde).getTime() : 0;
-    const boton = `<button type="button" class="boton boton--amarillo boton--grande" id="abrirFlip">📖 Leer la cartilla</button>`;
+    const boton = `<button type="button" class="boton boton--amarillo boton--grande" id="abrirFlip">📖 Leer el libro</button>`;
     const activar = () => { caja.innerHTML = boton; $("#abrirFlip").addEventListener("click", () => abrirFlip(c.flipbook)); };
     if (!meta || Date.now() >= meta) { activar(); return; }
     const piezas = [["dias", "días"], ["horas", "horas"], ["min", "min"], ["seg", "seg"]];
@@ -152,7 +152,7 @@
           ${piezas.map(([k, l]) => `<span class="cuenta__ficha"><b data-k="${k}">00</b><small>${l}</small></span>`).join("")}
         </div>
         <p class="sr" aria-live="polite" id="cuentaSr"></p>
-        <span class="boton boton--grande boton--bloqueado" aria-disabled="true">🔒 Leer la cartilla</span>
+        <span class="boton boton--grande boton--bloqueado" aria-disabled="true">🔒 Leer el libro</span>
       </div>`;
     const dos = (n) => String(n).padStart(2, "0");
     let ultimoDia = null;
@@ -171,7 +171,7 @@
   function abrirFlip(url) {
     const dlg = $("#visorCartilla"), marco = $("#visorMarco");
     if (!marco.querySelector("iframe")) {
-      marco.innerHTML = `<iframe src="${esc(url)}" title="Cartilla A PULSO para leer en línea" allowfullscreen allow="fullscreen" loading="lazy"></iframe>`;
+      marco.innerHTML = `<iframe src="${esc(url)}" title="Libro A PULSO para leer en línea" allowfullscreen allow="fullscreen" loading="lazy"></iframe>`;
     }
     const origen = document.activeElement;
     dlg.showModal();

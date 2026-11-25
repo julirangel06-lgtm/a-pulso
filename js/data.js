@@ -52,7 +52,7 @@ window.SITE = {
     antetitulo: "¿Qué es",
     titulo: "A PULSO?",
     parrafos: [
-      "Una cartilla y una galería sobre los letreros pintados a mano del Centro Histórico de Barranquilla.",
+      "Un libro y una galería sobre los letreros pintados a mano del Centro Histórico de Barranquilla.",
       "Caminamos Barrio Abajo, El Centro y San Roque, entramos al taller de Yeison Romero y lo juntamos todo en una guía para que tú también aprendas a hacer letras a pulso.",
     ],
     contenido: [
@@ -63,14 +63,14 @@ window.SITE = {
       { num: "5", titulo: "Plantillas", texto: "Para imprimir y practicar." },
     ],
     cartilla: {
-      portada: foto("img/portada-cartilla", 900, 1350, { alt: "Portada de la cartilla A PULSO: el título en letra rotulada sobre una pared blanca con una hoja de palma" }),
+      portada: foto("img/portada-cartilla", 900, 1350, { alt: "Portada del libro A PULSO: el título en letra rotulada sobre una pared blanca con una hoja de palma" }),
       /* Flipbook para leer en línea (no se descarga) */
       flipbook: "https://heyzine.com/flip-book/86956347db.html#page/1",
       detalle: "83 páginas · Lectura en línea",
       /* El botón para leer se habilita solo en esta fecha (hora de Colombia, UTC-5).
          Deja "" para que esté disponible desde ya. */
       disponibleDesde: "2026-12-04T00:00:00-05:00",
-      textoEspera: "La cartilla se podrá leer en línea el 4 de diciembre de 2026",
+      textoEspera: "El libro se podrá leer en línea el 4 de diciembre de 2026",
     },
     creditos: {
       institucion: "Institución Universitaria de Barranquilla",
@@ -283,7 +283,7 @@ window.SITE = {
   /* ---------------- 7. TALLER CON ESTUDIANTES ---------------- */
   taller: {
     titulo: "Taller con estudiantes",
-    intro: "Encuestamos a 25 estudiantes de la IUB, diseñamos la cartilla con sus respuestas y la pusimos a prueba en un taller.",
+    intro: "Encuestamos a 25 estudiantes de la IUB, diseñamos el libro con sus respuestas y lo pusimos a prueba en un taller.",
     proceso: [
       { titulo: "Encuesta", texto: "25 estudiantes de la IUB." },
       { titulo: "Trazos básicos", texto: "Rectas, curvas y arcos." },
@@ -299,7 +299,7 @@ window.SITE = {
       foto("img/taller/taller-02", 1200, 1600, { alt: "Estudiante practica el abecedario con pincel y una paleta de pintura", autor: EQUIPO_FOTO, fecha: "11 de noviembre de 2026" }),
       foto("img/taller/taller-04", 1600, 1200, { alt: "Estudiantes trabajan con plantillas junto a una tableta y un portátil", autor: EQUIPO_FOTO, fecha: "18 de noviembre de 2026" }),
       foto("img/taller/taller-01", 900, 1600, { alt: "Estudiante practica trazos curvos en amarillo sobre una plantilla", autor: EQUIPO_FOTO, fecha: "11 de noviembre de 2026" }),
-      foto("img/taller/taller-05", 1600, 1200, { alt: "Grupo de estudiantes conversa alrededor de un portátil con la cartilla", autor: EQUIPO_FOTO, fecha: "18 de noviembre de 2026" }),
+      foto("img/taller/taller-05", 1600, 1200, { alt: "Grupo de estudiantes conversa alrededor de un portátil con el libro", autor: EQUIPO_FOTO, fecha: "18 de noviembre de 2026" }),
       foto("img/taller/taller-07", 900, 1600, { alt: "Estudiante pinta letras con marcadores sobre una hoja de práctica", autor: EQUIPO_FOTO, fecha: "18 de noviembre de 2026" }),
     ],
     videos: [
