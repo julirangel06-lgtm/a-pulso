@@ -16,7 +16,7 @@
   function img(f, { sizes = "(min-width: 900px) 33vw, 100vw", cls = "", eager = false, decor = false } = {}) {
     if (!f) return "";
     const alt = decor ? "" : esc(f.alt || "");
-    return `<img class="${cls}" src="${f.src}-sm.webp" srcset="${f.src}-sm.webp 720w, ${f.src}.webp ${f.w}w" sizes="${sizes}" width="${f.w}" height="${f.h}" alt="${alt}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${decor ? ' aria-hidden="true"' : ""}>`;
+    return `<img class="${cls}" src="${f.src}-sm.webp" srcset="${f.src}-sm.webp ${Math.min(720, f.w)}w, ${f.src}.webp ${f.w}w" sizes="${sizes}" width="${f.w}" height="${f.h}" alt="${alt}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${decor ? ' aria-hidden="true"' : ""}>`;
   }
   const deco = (name, cls, w, h) => `<img class="deco ${cls}" src="img/collage/${name}.webp" width="${w}" height="${h}" alt="" aria-hidden="true" loading="lazy" decoding="async">`;
   const ast = (cls = "") => `<span class="ast ${cls}" aria-hidden="true">✱</span>`;
@@ -635,7 +635,7 @@
       <div class="banderines" aria-hidden="true">${banderines}</div>
       <div class="contenedor pie__grid">
         <div class="pie__marca">
-          <img src="img/logo-apulso-sm.webp" width="220" height="226" alt="A PULSO" loading="lazy">
+          <img src="img/logo-a-pulso-xs.webp" width="216" height="240" alt="A PULSO" loading="lazy">
           <p class="pie__lema">${esc(F.lema)}</p>
           <figure class="qr">
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&data=${encodeURIComponent(qrUrl)}" width="160" height="160" alt="Código QR con el enlace a este sitio" loading="lazy">

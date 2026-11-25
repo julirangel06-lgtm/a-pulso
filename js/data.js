@@ -37,7 +37,7 @@ window.SITE = {
 
   /* ---------------- 1. INICIO ---------------- */
   hero: {
-    logo: foto("img/logo-apulso", 1073, 1100, { alt: "A PULSO, escrito en letra rotulada a pincel con degradado amarillo, rojo y verde" }),
+    logo: foto("img/logo-a-pulso", 992, 1100, { alt: "A PULSO, escrito en letra rotulada a pincel con degradado amarillo, rojo y verde" }),
     subtitulo:
       "Proyecto editorial sobre el oficio letrerista y el patrimonio gráfico del Centro Histórico de Barranquilla",
     frase: "Barranquilla se escribe a mano. Ven a conocer a quienes la pintan.",
