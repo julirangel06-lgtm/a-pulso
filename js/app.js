@@ -298,6 +298,7 @@
     const pintarObras = (tipo) => {
       const items = L.obras.filter((o) => tipo === "*" || o.tipo === tipo);
       registrar("obras", items.map((o) => ({ ...o, pie: pieFoto(o, `<span class="pie-tipo">${esc(o.tipo)}</span>`) })));
+      requestAnimationFrame(() => animarFotos($("#obrasGrid")));
       $("#obrasGrid").innerHTML = items.map((o, i) => `<div class="masonry__item">${tarjetaFoto(o, "obras", i, "(min-width: 1100px) 30vw, (min-width: 640px) 45vw, 92vw")}</div>`).join("");
       $("#obrasEstado").textContent = `${items.length} obras`;
     };
@@ -440,6 +441,7 @@
             <small>Siguiente barrio</small><span>${esc(sig.nombre)} <span aria-hidden="true">→</span></span>
           </button>
         </div>`;
+      animarFotos(panel);
       $(".barrio-sig", panel).addEventListener("click", (e) => { usar(); ir(e.currentTarget.dataset.barrio, true); });
     };
     // Al primer toque se apagan las pistas
@@ -500,10 +502,10 @@
     const filas = r.datos.map((d) => {
       const vacio = d.valor === null || d.valor === undefined || d.valor === "";
       const w = vacio ? 100 : Math.max(0, Math.min(100, Number(d.valor)));
-      return `<li class="barra-fila">
+      return `<li class="barra-fila" style="--i:${r.datos.indexOf(d)}">
         <span class="barra-fila__etq">${t(d.etiqueta)}</span>
         <span class="barra-fila__pista"><span class="barra${vacio ? " barra--vacia" : ""}" style="--w:${w}%; --c:${col(d.color)}"></span></span>
-        <span class="barra-fila__val">${vacio ? '<mark class="pendiente">[PENDIENTE]</mark>' : esc(d.valor + r.unidad)}</span>
+        <span class="barra-fila__val"${vacio ? "" : ` data-cuenta="${esc(d.valor + r.unidad)}"`}>${vacio ? '<mark class="pendiente">[PENDIENTE]</mark>' : esc(d.valor + r.unidad)}</span>
       </li>`;
     }).join("");
     return `<figure class="grafica revela"><figcaption>${t(r.pregunta)}</figcaption><ul class="barras" role="list">${filas}</ul></figure>`;
@@ -529,7 +531,7 @@
 
         <h3 class="subrotulo">${esc(T.titDatos || "Lo que dijeron")}</h3>
         <ul class="globos">${T.testimonios.map((g, i) => `<li class="globo revela${g.cifra ? " globo--dato" : ""}" style="--fondo:${col(g.color)}; --giro:${[-2, 1, -1][i % 3]}deg">
-          ${g.cifra ? `<strong class="globo__cifra">${esc(g.cifra)}</strong><p>${t(g.texto)}</p>` : `<p>${t(g.texto)}</p><span>— ${t(g.autor)}</span>`}
+          ${g.cifra ? `<strong class="globo__cifra" data-cuenta="${esc(g.cifra)}">${esc(g.cifra)}</strong><p>${t(g.texto)}</p>` : `<p>${t(g.texto)}</p><span>— ${t(g.autor)}</span>`}
         </li>`).join("")}</ul>
 
         <h3 class="subrotulo">${esc(T.titResultados || "Resultados")}</h3>
@@ -669,6 +671,7 @@
     let grupo = null, i = 0, origen = null;
     const mostrar = () => {
       const it = grupos[grupo][i];
+      im.classList.remove("lb-entra"); void im.offsetWidth; im.classList.add("lb-entra");
       im.src = `${it.src}.webp`; im.alt = it.alt || ""; im.width = it.w; im.height = it.h;
       pie.innerHTML = it.pie || "";
       cuenta.textContent = `${i + 1} de ${grupos[grupo].length}`;
@@ -687,7 +690,8 @@
     $("#lbPrev").addEventListener("click", () => mover(-1));
     $("#lbNext").addEventListener("click", () => mover(1));
     $("#lbCerrar").addEventListener("click", () => dlg.close());
-    dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+    // Cerrar al tocar cualquier parte que no sea la foto, su pie o los botones
+    dlg.addEventListener("click", (e) => { if (!e.target.closest("#lbImg, #lbPie, .lb-btn")) dlg.close(); });
     dlg.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft") { e.preventDefault(); mover(-1); }
       if (e.key === "ArrowRight") { e.preventDefault(); mover(1); }
@@ -726,9 +730,52 @@
     $$("video").forEach((v) => vio.observe(v));
   }
 
+  /* ---------- Animaciones: fotos que entran, números que cuentan ---------- */
+  var ioFotos = null; // var: se usa antes de esta línea (al pintar los barrios)
+  function animarFotos(raiz) {
+    const items = $$(".masonry__item, .tira li", raiz);
+    if (reduceMotion || !("IntersectionObserver" in window)) return;
+    if (!ioFotos) ioFotos = new IntersectionObserver((en) => en.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add("entra"); ioFotos.unobserve(e.target); }
+    }), { rootMargin: "0px 0px -6% 0px" });
+    items.forEach((el, k) => { el.classList.add("por-entrar"); el.style.setProperty("--d", `${(k % 6) * 70}ms`); ioFotos.observe(el); });
+  }
+  function initCuentas() {
+    const els = $$("[data-cuenta]");
+    if (reduceMotion || !("IntersectionObserver" in window)) return;
+    const contar = (el) => {
+      const txt = el.dataset.cuenta, m = txt.match(/\d+/);
+      if (!m) return;
+      const meta = Number(m[0]), dur = 1300, t0 = performance.now();
+      const paso = (ahora) => {
+        const p = Math.min(1, (ahora - t0) / dur), v = Math.round(meta * (1 - Math.pow(1 - p, 3)));
+        el.textContent = txt.replace(m[0], v);
+        if (p < 1) requestAnimationFrame(paso); else el.classList.add("cuenta-lista");
+      };
+      requestAnimationFrame(paso);
+    };
+    const io = new IntersectionObserver((en) => en.forEach((e) => {
+      if (e.isIntersecting) { contar(e.target); io.unobserve(e.target); }
+    }), { threshold: 0.6 });
+    els.forEach((el) => { el.textContent = el.dataset.cuenta.replace(/\d+/, "0"); io.observe(el); });
+  }
+  function initArriba() {
+    const b = document.createElement("button");
+    b.className = "arriba"; b.type = "button"; b.setAttribute("aria-label", "Volver al inicio");
+    b.innerHTML = '<span aria-hidden="true">↑</span><small>Inicio</small>';
+    document.body.appendChild(b);
+    const ver = () => b.classList.toggle("visible", window.scrollY > window.innerHeight * 1.2);
+    window.addEventListener("scroll", ver, { passive: true }); ver();
+    b.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      $(".cabecera__marca").focus({ preventScroll: true });
+    });
+  }
+
   /* ---------- arranque ---------- */
   document.title = S.meta.titulo;
   renderNav(); renderHero(); renderProyecto(); renderHistoria(); renderLetrerista();
   renderEntrevistas(); renderBarrios(); renderTaller(); renderOficio(); renderPie();
-  initLightbox(); initVisor(); initLetraViva(); initRevela();
+  initLightbox(); initVisor(); initLetraViva(); initRevela(); initCuentas(); initArriba();
+  $$(".afiche, #taller").forEach(animarFotos);
 })();
