@@ -147,6 +147,11 @@ window.SITE = {
       "Hoy es un referente del arte picotero. Su firma brilla en picós y turbos como El Timbalero, El Gran Fredy y El Sibanicú, y sus murales le ponen color a Rebolo, Las Nieves, la Ciudadela 20 de Julio, Carrizal y el Gran Malecón.",
       "Su método mezcla lo de siempre con lo de ahora: cada obra nace como un boceto a lápiz, pasa por el computador y termina en gran formato. La cuadrícula le da la perspectiva; el círculo cromático, todo el sabor.",
     ],
+    /* Redes de Yeison: se muestran debajo de su biografía */
+    redes: [
+      { red: "Instagram", nombre: "@yeisonromero_arte", url: "https://www.instagram.com/yeisonromero_arte/" },
+      { red: "Facebook", nombre: "Yeison Romero Arte y Más", url: "https://www.facebook.com/share/1EbeL1MUpH/" },
+    ],
     cita: {
       texto: "Antes de coger un pincel, debes observar.",
       fuente: "Yeison Romero, entrevista del 3 de octubre de 2026",

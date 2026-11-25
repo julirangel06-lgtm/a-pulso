@@ -40,6 +40,12 @@
     papel: `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 5h20l9 9v29H10z" fill="#fff" stroke="#111" stroke-width="3" stroke-linejoin="round"/><path d="M30 5v9h9" fill="none" stroke="#111" stroke-width="3" stroke-linejoin="round"/><path d="M16 21h12M16 27h8" stroke="#111" stroke-width="3" stroke-linecap="round"/><path d="M29 30l2.3 4.6 5.1.7-3.7 3.6.9 5.1-4.6-2.4-4.6 2.4.9-5.1-3.7-3.6 5.1-.7z" fill="var(--c-mango)" stroke="#111" stroke-width="2" stroke-linejoin="round"/></svg>`,
   };
 
+  // Íconos genéricos (cámara y perfil), sin logos de marca
+  const ICONOS_RED = {
+    instagram: `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="17.3" cy="6.7" r="1.4" fill="currentColor"/></svg>`,
+    facebook: `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>`,
+  };
+
   /* ---------- lightbox con grupos ---------- */
   const grupos = {};
   function registrar(grupo, items) { grupos[grupo] = items; }
@@ -281,6 +287,14 @@
             <span class="sr">${esc(L.nombre)}, ${esc(L.rol)}</span>
           </h2>
           ${L.bio.map((x) => `<p>${t(x)}</p>`).join("")}
+          ${L.redes && L.redes.length ? `<div class="redes">
+            <p class="redes__titulo">Sigue su trabajo</p>
+            <ul>${L.redes.map((r) => `<li><a class="red" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">
+              <span class="red__icono" aria-hidden="true">${ICONOS_RED[r.red.toLowerCase()] || ""}</span>
+              <span class="red__txt"><small>${esc(r.red)}</small>${esc(r.nombre)}</span>
+              <span class="sr">(se abre en otra pestaña)</span>
+            </a></li>`).join("")}</ul>
+          </div>` : ""}
         </div>
       </div>
       <figure class="cita contenedor revela">
