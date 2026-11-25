@@ -307,8 +307,8 @@ mark.pendiente {
 .hist__cab .rotulo { font-size: clamp(2rem, 6vw, 4rem); line-height: 1.08; margin-bottom: .25em; }
 .hist__cab .intro { margin: 0 auto; font-weight: 500; }
 .hist__pista {
-  list-style: none; margin: 0; display: flex; gap: clamp(1rem, 3vw, 2rem); width: max-content;
-  padding: .8rem max(1.25rem, calc((100vw - var(--ancho)) / 2)) 1rem; will-change: transform;
+  list-style: none; margin: 0; display: flex; gap: clamp(1rem, 3vw, 2rem); width: 100%; overflow-x: hidden; overflow-y: visible;
+  padding: 1.2rem max(1.25rem, calc((100vw - var(--ancho)) / 2)) 1.4rem; scrollbar-width: none;
 }
 .hist--libre .hist__fijo { position: static; height: auto; padding-block: 4.5rem 3.5rem; }
 .hist--libre .hist__pista { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding-inline: 1.25rem; scroll-padding-inline: 1.25rem; }
@@ -342,17 +342,21 @@ mark.pendiente {
 .hist--libre .hist__barra { margin-top: .6rem; }
 .hist--libre .hist__barra b { display: none; }
 @media (max-height: 640px) { .hito__cuerpo .hito__fuente { display: none; } .hist__cab .intro { display: none; } }
-/* celular con slide al bajar: todo debe caber en una pantalla */
+/* respaldo: la sección baja normal y la pista se mueve mientras cruza la pantalla */
+.hist--paso .hist__fijo { position: static; height: auto; padding: 4.5rem 0 3.2rem; }
+/* celular: todo debe caber en una pantalla mientras la sección está fija */
 @media (max-width: 759px) {
-  .hist:not(.hist--libre) .hist__fijo { padding: 72px 0 1.2rem; gap: .6rem; }
-  .hist:not(.hist--libre) .hist__cab .rotulo { font-size: 1.8rem; }
-  .hist:not(.hist--libre) .hist__cab .intro { font-size: .95rem; }
-  .hist:not(.hist--libre) .hist__pista { padding-inline: 10vw; gap: 1rem; }
-  .hist:not(.hist--libre) .hito { flex-basis: 80vw; }
-  .hist:not(.hist--libre) .hito__img { height: clamp(90px, 17svh, 150px); }
-  .hist:not(.hist--libre) .hito__fuente { display: none; }
-  .hist:not(.hist--libre) .hist__barra { margin-top: .4rem; }
+  .hist .hist__fijo { padding: 70px 0 1rem; gap: .5rem; }
+  .hist .hist__cab .rotulo { font-size: 1.8rem; }
+  .hist .hist__cab .intro { font-size: .95rem; }
+  .hist .hist__pista { padding-inline: 10vw; gap: 1rem; }
+  .hist .hito { flex-basis: 80vw; }
+  .hist .hito__img { height: clamp(90px, 16svh, 140px); }
+  .hist .hito__fuente { display: none; }
+  .hist--libre .hist__fijo, .hist--paso .hist__fijo { padding-block: 4.5rem 3rem; }
 }
+
+
 
 /* ---------- 4. LETRERISTA ---------- */
 .letrerista { background: var(--c-mango); color: var(--tinta); }
@@ -589,10 +593,12 @@ mark.pendiente {
 .taller__media { display: grid; gap: 1.5rem; }
 @media (min-width: 1000px) { .taller__media { grid-template-columns: 1fr 260px; align-items: start; } }
 .taller .foto-btn { border-color: #111; box-shadow: 5px 5px 0 #111; }
-.videos { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+.videos { display: grid; gap: 1.1rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) and (max-width: 999px) { .videos { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1000px) { .videos { grid-template-columns: 1fr; } }
 .video-loop { width: 100%; border: 3px solid #111; border-radius: 6px; box-shadow: 5px 5px 0 #111; background: #000; aspect-ratio: 16/9; object-fit: cover; }
 .video-loop--v { aspect-ratio: 9/14; }
+@media (max-width: 639px) { .video-loop, .video-loop--v { aspect-ratio: auto; max-height: 80vh; object-fit: contain; } }
 .globos { list-style: none; padding: 0; margin: 0; display: grid; gap: 2rem; }
 @media (min-width: 760px) { .globos { grid-template-columns: repeat(3, 1fr); } }
 .globo {
@@ -760,7 +766,7 @@ mark.pendiente {
 
 /* ---------- botón volver al inicio ---------- */
 .arriba {
-  position: fixed; right: max(1rem, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); z-index: 40;
+  position: fixed; right: calc(1.4rem + env(safe-area-inset-right)); bottom: calc(1.6rem + env(safe-area-inset-bottom)); z-index: 40;
   width: 70px; height: 70px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
   padding: 0; background: var(--c-mango); color: var(--c-petroleo); border: 3px solid var(--c-petroleo); box-shadow: 4px 4px 0 var(--c-petroleo);
   font-family: var(--f-rotulo); text-transform: uppercase; opacity: 0; transform: translateY(20px) scale(.8); pointer-events: none;
@@ -768,8 +774,13 @@ mark.pendiente {
 }
 .arriba span { display: block; font-size: 1.45rem; line-height: 1; }
 .arriba small { display: block; font-size: .68rem; line-height: 1; letter-spacing: .06em; }
-.arriba.visible { opacity: 1; transform: none; pointer-events: auto; }
+.arriba.visible { opacity: 1; transform: none; pointer-events: auto; animation: flotaBoton 3.2s ease-in-out .4s infinite; }
+@keyframes flotaBoton { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+.arriba::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 3px solid var(--c-mango); opacity: 0; pointer-events: none; }
+.arriba.visible::after { animation: ondaBoton 3.2s ease-out .4s infinite; }
+@keyframes ondaBoton { 0% { transform: scale(1); opacity: .7; } 60%, 100% { transform: scale(1.45); opacity: 0; } }
 .arriba:hover { transform: translateY(-3px); box-shadow: 5px 7px 0 var(--c-petroleo); }
+.en-historia .arriba.visible { opacity: 0; pointer-events: none; transform: translateY(20px) scale(.8); }
 .arriba:hover span { animation: subeFlecha .7s ease-in-out infinite; }
 @keyframes subeFlecha { 50% { transform: translateY(-4px); } }
 

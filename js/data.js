@@ -364,7 +364,7 @@ window.SITE = {
       { rol: "Corrección de textos", nombres: "Yuliana Martínez" },
       { rol: "Con la participación de", nombres: "el letrerista Yeison Romero y la magíster en Educación, Arte y Cultura Teolinda Berrio" },
     ],
-    asesor: "[PENDIENTE: nombre del asesor o asesora]",
+    asesor: "Heidy Bravo",
     agradecimientos: [
       "A Yeison Romero, por abrirnos su taller y compartir su oficio.",
       "Al diseñador Luis Corena, por su mirada crítica y honesta.",

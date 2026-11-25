@@ -204,48 +204,62 @@
       <div class="borde borde--abajo" style="--borde:var(--c-mango)"></div>`;
 
     const cont = $("#hist"), fijo = $(".hist__fijo", cont), pista = $("#histPista"), prog = $("#histProg"), pistaTxt = $("#histPistaTxt");
+    // Tres modos:
+    //  "fijo":  escritorio con mouse. La sección se queda fija y la pista avanza al bajar.
+    //  "paso":  celular o tableta. La sección baja normal (sin fijarse) y la pista avanza mientras cruza la pantalla.
+    //           No agrega alto extra, así que no puede quedar espacio en blanco.
+    //  "libre": movimiento reducido. Carrusel que se desliza con el dedo.
+    // Importante: la pista se mueve con scrollLeft (no con transform). En iPhone, mover con transform
+    // un elemento tan ancho hace que Safari deje de pintarlo y las tarjetas desaparecen.
     let dist = 0, pend = false, modo = null, stickyRoto = false;
-    // La sección queda fija y la pista avanza en horizontal al bajar (celular y escritorio).
-    // Con movimiento reducido, o si el navegador no logra fijar la sección, pasa a carrusel manual.
+    const elegir = () => (reduceMotion ? "libre" : stickyRoto ? "paso" : "fijo");
     const aplicarModo = () => {
-      const libre = reduceMotion || stickyRoto;
-      if (libre === modo) { if (!libre) medir(); return; }
-      modo = libre;
-      cont.classList.toggle("hist--libre", libre);
-      pistaTxt.textContent = libre ? "Desliza para recorrerlas →" : "Sigue bajando y recórrelas ↓";
-      pista.style.transform = "";
-      cont.style.height = "";
-      if (!libre) medir(); else progLibre();
+      const nuevo = elegir();
+      if (nuevo === modo) { medir(); return; }
+      modo = nuevo;
+      cont.classList.toggle("hist--libre", modo === "libre");
+      cont.classList.toggle("hist--paso", modo === "paso");
+      pistaTxt.textContent = modo === "libre" ? "Desliza para recorrerlas →" : "Sigue bajando y recórrelas ↓";
+      cont.style.height = ""; pista.scrollLeft = 0;
+      medir();
     };
     const medir = () => {
-      pista.style.transform = "";
-      dist = Math.max(0, pista.scrollWidth - window.innerWidth);
-      // se usa el alto real del bloque fijo (svh), que no cambia cuando el navegador del celular esconde su barra
-      cont.style.height = `${fijo.offsetHeight + dist}px`;
+      if (modo === "libre") { progLibre(); return; }
+      dist = Math.max(0, pista.scrollWidth - pista.clientWidth);
+      cont.style.height = modo === "fijo" ? `${fijo.offsetHeight + dist}px` : "";
       mover();
     };
     const mover = () => {
       pend = false;
-      if (modo) return;
-      const r = cont.getBoundingClientRect();
-      const total = cont.offsetHeight - fijo.offsetHeight;
-      const p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
-      pista.style.transform = `translate3d(${-p * dist}px,0,0)`;
-      prog.style.width = `${p * 100}%`;
-      // Respaldo: si estamos en medio del recorrido y el bloque no quedó pegado arriba, el sticky no funciona
-      if (!stickyRoto && r.top < -40 && r.bottom > fijo.offsetHeight + 40 && Math.abs(fijo.getBoundingClientRect().top) > 30) {
-        stickyRoto = true; aplicarModo();
+      if (modo === "libre") return;
+      const r = cont.getBoundingClientRect(), vh = window.innerHeight;
+      let p;
+      if (modo === "fijo") {
+        const total = cont.offsetHeight - fijo.offsetHeight;
+        p = total > 0 ? -r.top / total : 0;
+        // Respaldo: si el bloque no quedó pegado arriba, el navegador no soporta el modo fijo
+        if (!stickyRoto && r.top < -40 && r.bottom > fijo.offsetHeight + 40 && Math.abs(fijo.getBoundingClientRect().top) > 30) {
+          stickyRoto = true; aplicarModo(); return;
+        }
+      } else {
+        // 0 cuando la sección asoma por abajo, 1 cuando está por salir por arriba
+        p = (vh * 0.75 - r.top) / (vh * 0.75 - vh * 0.15 + r.height * 0.55);
       }
+      p = Math.min(1, Math.max(0, p));
+      pista.scrollLeft = p * dist;
+      // mientras la historia ocupa la pantalla, el botón «Inicio» se esconde para no tapar la barra
+      document.body.classList.toggle("en-historia", r.top < vh * 0.5 && r.bottom > vh * 0.5);
+      prog.style.width = `${p * 100}%`;
     };
     const progLibre = () => {
       const max = pista.scrollWidth - pista.clientWidth;
       prog.style.width = `${max > 0 ? (pista.scrollLeft / max) * 100 : 0}%`;
     };
-    pista.addEventListener("scroll", () => { if (modo) progLibre(); }, { passive: true });
-    window.addEventListener("scroll", () => { if (!pend && !modo) { pend = true; requestAnimationFrame(mover); } }, { passive: true });
+    pista.addEventListener("scroll", () => { if (modo === "libre") progLibre(); }, { passive: true });
+    window.addEventListener("scroll", () => { if (!pend && modo !== "libre") { pend = true; requestAnimationFrame(mover); } }, { passive: true });
     let ancho = window.innerWidth;
-    window.addEventListener("resize", () => { if (window.innerWidth !== ancho) { ancho = window.innerWidth; if (!modo) medir(); } });
-    window.addEventListener("load", () => { if (!modo) medir(); });
+    window.addEventListener("resize", () => { if (window.innerWidth !== ancho) { ancho = window.innerWidth; aplicarModo(); } });
+    window.addEventListener("load", medir);
     aplicarModo();
   }
 
@@ -647,7 +661,7 @@
         <div class="pie__creditos">
           <h2 class="rotulo rotulo--chico rotulo--amarillo">Créditos</h2>
           <dl>${F.equipo.map((e) => `<div><dt>${esc(e.rol)}</dt><dd>${t(e.nombres)}</dd></div>`).join("")}
-            <div><dt>Asesoría</dt><dd>${t(F.asesor)}</dd></div>
+            <div><dt>Asesora del proyecto</dt><dd>${t(F.asesor)}</dd></div>
           </dl>
           <h3 class="pie__sub">Agradecimientos</h3>
           ${F.agradecimientos.map((a) => `<p>${t(a)}</p>`).join("")}
